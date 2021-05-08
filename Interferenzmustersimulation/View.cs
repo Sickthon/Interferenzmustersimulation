@@ -7,7 +7,10 @@ namespace MatrixTest
 {
     class View
     {
-        private Bitmap myBild; //Das Interferenzmuster wird in dieses Bitmap gezeichnet
+        /// <summary>
+        /// Bitmap-Objekt, in welches das Interferenzmuster gezeichnet wird.
+        /// </summary>
+        private Bitmap myBild;
         private Model myModel;
         private Form myForm;
 

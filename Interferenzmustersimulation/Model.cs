@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 
 namespace MatrixTest
 {
@@ -41,12 +39,13 @@ namespace MatrixTest
         /// </summary>
         private double myLaserRadius;
         private View myView;
+        double myRenderGenauigkeit; //Genauigkeit
 
         static decimal myWellenlänge = 632.8E-9m;
-        public Model(double d1, double d2, double xmax, int width, int height, double LaserRadius)
+        public Model(double d1, double d2, double xmax, int width, int height, double LaserRadius, double RenderGenauigkeit)
         {
             myD1 = d1 * 1E-3;
-            myD2 = d2 * 1E-6;         
+            myD2 = d2 * 1E-6;
             myXmax = xmax * 1E-3;
             myXmin = -myXmax;
             myYmax = myXmax;
@@ -54,6 +53,7 @@ namespace MatrixTest
             myBitmapWidth = width;
             myBitmapHeight = height;
             myLaserRadius = LaserRadius;
+            myRenderGenauigkeit = RenderGenauigkeit;
 
             newRelativePerPixel();
         }
@@ -64,12 +64,6 @@ namespace MatrixTest
             {
                 myView.DrawInterferencePattern();
             }
-        }
-
-        public View ModelView
-        {
-            get { return myView; }
-            set { myView = value; /*this.notifyView();*/ }
         }
 
         private void newRelativePerPixel()
@@ -107,23 +101,20 @@ namespace MatrixTest
         /// <param name="hx">Die Variable bezeichnet den Abstand zum Mittelpunkt des Lasers in X-Richtung</param>
         /// <param name="hy">Die Variable bezeichnet den Abstand zum Mittelpunkt des Lasers in Y-Richtung</param>
         /// <returns>Normierte Superposition zwischen 0 und 1</returns>
-        public double InterferenzFunktion(double x, double hx=0, double hy=0)
+        public double InterferenzFunktion(double x, double hx = 0, double hy = 0)
         {
-            //Debug.WriteLine(String.Format("{0}, {1}, {2}", x, hx, hy));
             double k = 2 * Math.PI / (double)myWellenlänge; //Wellenvektor
-            /*double omega = k * 299792458; //Winkelgeschwidigket*/
-            double yHat1 = 1; //Amplitude Welle 1
-            double yHat2 = 1; //Amplitude Welle 2
             double phi1 = 0; //Phasenverschiebung Welle 1
             double phi2 = 0; //Phasenverschiebund Welle 2
-            double l1 = Math.Sqrt(Math.Pow(myD1, 2) + Math.Pow(x-hx, 2) + Math.Pow(hy, 2)); //Distanz, welche die erste Welle zurücklegt
-            double l2 = Math.Sqrt(Math.Pow(myD1 + myD2, 2) + Math.Pow(x-hx, 2) + Math.Pow(hy, 2)); //Distanz, welche die zweite Welle zurücklegt
+            double l1 = Math.Sqrt(Math.Pow(myD1, 2) + Math.Pow(x - hx, 2) + Math.Pow(hy, 2)); //Distanz, welche die erste Welle zurücklegt
+            double l2 = Math.Sqrt(Math.Pow(myD1 + myD2, 2) + Math.Pow(x - hx, 2) + Math.Pow(hy, 2)); //Distanz, welche die zweite Welle zurücklegt
 
             double psi1 = k * l1 + phi1;
             double psi2 = k * l2 + phi2;
+            double Xc = Math.Cos(psi1) + Math.Cos(psi2);
+            double Xs = Math.Sin(psi1) + Math.Sin(psi2);
 
-            double Intensität = Math.Max(yHat1 * yHat2 * (Math.Pow(Math.Cos(psi1), 2) + 2 * Math.Cos(psi1) * Math.Cos(psi2) + Math.Pow(Math.Cos(psi2), 2) +
-                Math.Pow(Math.Sin(psi1), 2) + 2 * Math.Sin(psi1) * Math.Sin(psi2) + Math.Pow(Math.Sin(psi2), 2)), 0);
+            double Intensität = Math.Max(Math.Pow(Xc, 2) + Math.Pow(Xs, 2), 0);
 
             return Intensität / 4;
         }
@@ -135,18 +126,17 @@ namespace MatrixTest
         /// <returns></returns>
         public double InterferenzFunktionLaserGrösse(double x)
         {
-            double count = 100.0; //Genauigkeit
             double sum = 0;
             double p = 0;
-            double LaserRadiusPerCount = myLaserRadius / count;
-            double RadPerCount = 2 * Math.PI / count;
+            double LaserRadiusPerCount = myLaserRadius / myRenderGenauigkeit;
+            double RadPerCount = 2 * Math.PI / myRenderGenauigkeit;
             double previousX = double.NaN;
             double previousY = double.NaN;
 
-            for (double i = 0; i < count; i++)
+            for (double i = 0; i < myRenderGenauigkeit; i++)
             {
                 double AbsLength = LaserRadiusPerCount * i;
-                for (double j = 0; j <= count; j++)
+                for (double j = 0; j <= myRenderGenauigkeit; j++)
                 {
                     double hx = AbsLength * Math.Cos(RadPerCount * j);
                     double hy = AbsLength * Math.Sin(RadPerCount * j);
@@ -165,12 +155,12 @@ namespace MatrixTest
 
         public double InterferenzFunktionLaserGrösse2(double x)
         {
-            double count = 1000.0; //Genauigkeit
+            double count = 100.0; //Genauigkeit
             double sum = 0;
             double p = 0;
             double LaserRadiusPerCount = myLaserRadius * 2 / count;
 
-            for (double i = -myLaserRadius; i <= myLaserRadius; i+= LaserRadiusPerCount)
+            for (double i = -myLaserRadius; i <= myLaserRadius; i += LaserRadiusPerCount)
             {
                 for (double j = -myLaserRadius; j <= myLaserRadius; j += LaserRadiusPerCount)
                 {
@@ -185,6 +175,12 @@ namespace MatrixTest
             return sum;
         }
 
+        #region Accessor-Properties
+        public View ModelView
+        {
+            get { return myView; }
+            set { myView = value; }
+        }
         public int Height
         {
             get { return myBitmapHeight; }
@@ -202,17 +198,17 @@ namespace MatrixTest
 
         public double d1
         {
-            set { myD1 = value * 1E-3; /*this.notifyView();*/ } // Millimeter zu Meter
+            set { myD1 = value * 1E-3; } // Millimeter zu Meter
         }
 
         public double d2
         {
-            set { myD2 = value * 1E-6; /*this.notifyView();*/ } // Mikrometer zu Meter
+            set { myD2 = value * 1E-6; } // Mikrometer zu Meter
         }
 
         public double LaserRadius
         {
-            set { myLaserRadius = value; /*this.notifyView();*/ }
+            set { myLaserRadius = value; }
         }
 
         public double xmax
@@ -226,12 +222,16 @@ namespace MatrixTest
                 newRelativePerPixel();
             }
         }
-        static public decimal Wellenlänge
+        public static decimal Wellenlänge
         {
-            get
-            {
-                return myWellenlänge;
-            }
+            get { return myWellenlänge; }
         }
+
+        public double RenderGenauigkeit
+        {
+            get { return myRenderGenauigkeit; }
+            set { myRenderGenauigkeit = value; }
+        }
+        #endregion
     }
 }
