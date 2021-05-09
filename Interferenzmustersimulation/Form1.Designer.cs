@@ -29,6 +29,7 @@ namespace MatrixTest
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Interferenzmustersimulation));
             this.ControlPanel = new System.Windows.Forms.Panel();
             this.ControlPanelCollapsButton = new System.Windows.Forms.Button();
@@ -48,8 +49,10 @@ namespace MatrixTest
             this.label4 = new System.Windows.Forms.Label();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.ControlBarPanel = new System.Windows.Forms.Panel();
+            this.FormHelpLabel = new System.Windows.Forms.Label();
             this.FormMinimizeLabel = new System.Windows.Forms.Label();
             this.FormCloseLabel = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.ControlPanel.SuspendLayout();
             this.ControlSubPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RendergenauigkeitUpDown)).BeginInit();
@@ -80,6 +83,7 @@ namespace MatrixTest
             // 
             // ControlPanelCollapsButton
             // 
+            this.ControlPanelCollapsButton.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.ControlPanelCollapsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.ControlPanelCollapsButton.Location = new System.Drawing.Point(438, 186);
             this.ControlPanelCollapsButton.Name = "ControlPanelCollapsButton";
@@ -153,6 +157,7 @@ namespace MatrixTest
             this.RendergenauigkeitUpDown.Name = "RendergenauigkeitUpDown";
             this.RendergenauigkeitUpDown.Size = new System.Drawing.Size(123, 22);
             this.RendergenauigkeitUpDown.TabIndex = 47;
+            this.toolTip1.SetToolTip(this.RendergenauigkeitUpDown, resources.GetString("RendergenauigkeitUpDown.ToolTip"));
             this.RendergenauigkeitUpDown.Value = new decimal(new int[] {
             100,
             0,
@@ -193,6 +198,7 @@ namespace MatrixTest
             this.Länge1UpDown.Name = "Länge1UpDown";
             this.Länge1UpDown.Size = new System.Drawing.Size(124, 22);
             this.Länge1UpDown.TabIndex = 36;
+            this.toolTip1.SetToolTip(this.Länge1UpDown, "Die Länge des arretierten Armes vom Laser bis zum Fotowiderstand");
             this.Länge1UpDown.Value = new decimal(new int[] {
             300,
             0,
@@ -219,6 +225,7 @@ namespace MatrixTest
             this.Länge2RelativUpDown.Name = "Länge2RelativUpDown";
             this.Länge2RelativUpDown.Size = new System.Drawing.Size(123, 22);
             this.Länge2RelativUpDown.TabIndex = 37;
+            this.toolTip1.SetToolTip(this.Länge2RelativUpDown, "Die relative Längendifferenz des längenverstellbaren Armes zum arretierten Arm");
             this.Länge2RelativUpDown.Value = new decimal(new int[] {
             3000,
             0,
@@ -257,12 +264,17 @@ namespace MatrixTest
             this.RLVeränderung.Name = "RLVeränderung";
             this.RLVeränderung.Size = new System.Drawing.Size(124, 22);
             this.RLVeränderung.TabIndex = 43;
+            this.toolTip1.SetToolTip(this.RLVeränderung, "Die Änderung bei einem Klick auf das Control \"Relativer L.-Unterschied [μm]\"\r\nDad" +
+        "urch lässt sich die relative Längendifferenz um ein Vielfaches der Wellenlänge λ" +
+        " verändern.\r\n\r\n");
             this.RLVeränderung.WordWrap = false;
             this.RLVeränderung.TextChanged += new System.EventHandler(this.RLVeränderung_TextChanged);
             this.RLVeränderung.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RLVeränderung_KeyDown);
             // 
             // numericUpDown2
             // 
+            this.numericUpDown2.AccessibleDescription = "";
+            this.numericUpDown2.AccessibleName = "";
             this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.numericUpDown2.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.numericUpDown2.DecimalPlaces = 9;
@@ -280,8 +292,9 @@ namespace MatrixTest
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(124, 22);
             this.numericUpDown2.TabIndex = 39;
+            this.toolTip1.SetToolTip(this.numericUpDown2, "Der Durchmesser des Interferenzmusters, das auf dem Fotowiderstand entsteht.");
             this.numericUpDown2.Value = new decimal(new int[] {
-            60,
+            120,
             0,
             0,
             0});
@@ -302,9 +315,9 @@ namespace MatrixTest
             this.label4.ForeColor = System.Drawing.Color.White;
             this.label4.Location = new System.Drawing.Point(255, 58);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 17);
+            this.label4.Size = new System.Drawing.Size(167, 17);
             this.label4.TabIndex = 40;
-            this.label4.Text = "LaserRadius [mm]";
+            this.label4.Text = "Laser-Durchmesser [mm]";
             // 
             // numericUpDown3
             // 
@@ -325,21 +338,43 @@ namespace MatrixTest
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(123, 22);
             this.numericUpDown3.TabIndex = 41;
+            this.toolTip1.SetToolTip(this.numericUpDown3, "Der Durchmesser der Laserdiode. Zur Bestimmung des Interferenzmusters werden für " +
+        "jeden Punkt auf dem Fotowiderstand \r\nLichtwellen von verschiedenen Emissionspunk" +
+        "ten im Laser überlagert.");
             this.numericUpDown3.Value = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
-            262144});
+            196608});
             this.numericUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
             // ControlBarPanel
             // 
+            this.ControlBarPanel.BackColor = System.Drawing.Color.Transparent;
+            this.ControlBarPanel.Controls.Add(this.FormHelpLabel);
             this.ControlBarPanel.Controls.Add(this.FormMinimizeLabel);
             this.ControlBarPanel.Controls.Add(this.FormCloseLabel);
             this.ControlBarPanel.Location = new System.Drawing.Point(645, 0);
             this.ControlBarPanel.Name = "ControlBarPanel";
             this.ControlBarPanel.Size = new System.Drawing.Size(200, 41);
             this.ControlBarPanel.TabIndex = 35;
+            // 
+            // FormHelpLabel
+            // 
+            this.FormHelpLabel.BackColor = System.Drawing.Color.Transparent;
+            this.FormHelpLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormHelpLabel.ForeColor = System.Drawing.Color.White;
+            this.FormHelpLabel.Location = new System.Drawing.Point(17, 0);
+            this.FormHelpLabel.Name = "FormHelpLabel";
+            this.FormHelpLabel.Size = new System.Drawing.Size(60, 39);
+            this.FormHelpLabel.TabIndex = 2;
+            this.FormHelpLabel.Text = "?";
+            this.FormHelpLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.FormHelpLabel.Click += new System.EventHandler(this.FormHelpLabel_Click);
+            this.FormHelpLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormHelpLabel_MouseDown);
+            this.FormHelpLabel.MouseEnter += new System.EventHandler(this.FormHelpLabel_MouseEnter);
+            this.FormHelpLabel.MouseLeave += new System.EventHandler(this.FormHelpLabel_MouseLeave);
+            this.FormHelpLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormHelpLabel_MouseEnter);
             // 
             // FormMinimizeLabel
             // 
@@ -356,6 +391,7 @@ namespace MatrixTest
             this.FormMinimizeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormMinimizeLabel_MouseDown);
             this.FormMinimizeLabel.MouseEnter += new System.EventHandler(this.FormMinimizeLabel_MouseEnter);
             this.FormMinimizeLabel.MouseLeave += new System.EventHandler(this.FormMinimizeLabel_MouseLeave);
+            this.FormMinimizeLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormMinimizeLabel_MouseEnter);
             // 
             // FormCloseLabel
             // 
@@ -371,6 +407,14 @@ namespace MatrixTest
             this.FormCloseLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.FormCloseLabel_MouseDown);
             this.FormCloseLabel.MouseEnter += new System.EventHandler(this.FormCloseLabel_MouseEnter);
             this.FormCloseLabel.MouseLeave += new System.EventHandler(this.FormCloseLabel_MouseLeave);
+            this.FormCloseLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormCloseLabel_MouseEnter);
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.Active = false;
+            this.toolTip1.AutoPopDelay = 30000;
+            this.toolTip1.InitialDelay = 500;
+            this.toolTip1.ReshowDelay = 100;
             // 
             // Interferenzmustersimulation
             // 
@@ -423,6 +467,8 @@ namespace MatrixTest
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button ControlPanelCollapsButton;
         private System.Windows.Forms.Panel ControlSubPanel;
+        private System.Windows.Forms.Label FormHelpLabel;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

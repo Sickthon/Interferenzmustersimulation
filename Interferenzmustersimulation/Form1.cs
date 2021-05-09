@@ -31,10 +31,10 @@ namespace MatrixTest
         private void Form1_Load(object sender, EventArgs e)
         {
             ControlBarPanel.Left = ClientSize.Width - ControlBarPanel.Width;
-            double length = (double)numericUpDown2.Value;
+            double length = (double)numericUpDown2.Value / 2.0;
             int BitmapHeight = ClientSize.Height;
             InterferencePatternModel = new Model((double)Länge1UpDown.Value, (double)Länge2RelativUpDown.Value,
-                length, BitmapHeight, BitmapHeight, (double)numericUpDown3.Value, (double)RendergenauigkeitUpDown.Value);
+                length, BitmapHeight, BitmapHeight, (double)numericUpDown3.Value / 2.0, (double)RendergenauigkeitUpDown.Value);
             InterferencePatternModel.ModelView = new View(InterferencePatternModel);
             RLVeränderung.Text = Länge2RelativUpDown.Increment.ToString();
         }
@@ -44,9 +44,13 @@ namespace MatrixTest
         }
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.DrawImage(InterferencePatternModel.ModelView.ModelViewImage, new Point(350, 0));
+            if (InterferencePatternModel != null)
+            {
+                Graphics g = e.Graphics;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                Bitmap ImageOutput = InterferencePatternModel.ModelView.ModelViewImage;
+                g.DrawImage(ImageOutput, new Point((ClientSize.Width - ImageOutput.Width) / 2, 0));
+            }
         }
 
         #region UpDowns
@@ -62,12 +66,12 @@ namespace MatrixTest
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            InterferencePatternModel.xmax = (double)numericUpDown2.Value;
+            InterferencePatternModel.xmax = (double)numericUpDown2.Value / 2.0;
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            InterferencePatternModel.LaserRadius = (double)numericUpDown3.Value;
+            InterferencePatternModel.LaserRadius = (double)numericUpDown3.Value / 2.0;
         }
 
         private void toWavelengthButton_Click(object sender, EventArgs e)
@@ -144,6 +148,34 @@ namespace MatrixTest
         {
             FormMinimizeLabel.BackColor = Color.Transparent;
         }
+        private void FormHelpLabel_Click(object sender, EventArgs e)
+        {
+            toolTip1.Active = !toolTip1.Active;
+            if (toolTip1.Active)
+            {
+                Font LabelFont = FormHelpLabel.Font;
+                FormHelpLabel.Font = new Font(LabelFont.Name, LabelFont.Size, FontStyle.Strikeout);
+            }
+            else
+            {
+                Font LabelFont = FormHelpLabel.Font;
+                FormHelpLabel.Font = new Font(LabelFont.Name, LabelFont.Size, FontStyle.Regular);
+            }
+        }
+        private void FormHelpLabel_MouseDown(object sender, MouseEventArgs e)
+        {
+            FormHelpLabel.BackColor = Color.DarkOliveGreen;
+        }
+
+        private void FormHelpLabel_MouseEnter(object sender, EventArgs e)
+        {
+            FormHelpLabel.BackColor = Color.FromArgb(50, 255, 255, 255);
+        }
+
+        private void FormHelpLabel_MouseLeave(object sender, EventArgs e)
+        {
+            FormHelpLabel.BackColor = Color.Transparent;
+        }
         #endregion
 
         #region ControlPanel
@@ -166,8 +198,27 @@ namespace MatrixTest
         {
             if (MoveControlmouseDown)
             {
-                ControlPanel.Left += (e.X - ControlMouseDownX);
-                ControlPanel.Top += (e.Y - ControlMouseDownY);
+                int newX = ControlPanel.Left + (e.X - ControlMouseDownX);
+                int newY = ControlPanel.Top + (e.Y - ControlMouseDownY);
+
+                if(newX < 0)
+                { 
+                    newX = 0;
+                }
+                else if (newX + ControlPanel.Width > ClientSize.Width)
+                {
+                    newX = ClientSize.Width - ControlPanel.Width;
+                }
+                if (newY < 0)
+                {
+                    newY = 0;
+                }
+                else if(newY + ControlPanel.Height > ClientSize.Height )
+                {
+                    newY = ClientSize.Height - ControlPanel.Height;
+                }
+                ControlPanel.Left = newX;
+                ControlPanel.Top = newY;
             }
         }
 
@@ -197,5 +248,6 @@ namespace MatrixTest
             ControlPanel.Invalidate();
         }
         #endregion
+
     }
 }

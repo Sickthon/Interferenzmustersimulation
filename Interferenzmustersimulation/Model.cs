@@ -37,12 +37,12 @@ namespace MatrixTest
         /// <summary>
         /// Radius des Lasers in Metern
         /// </summary>
-        private double myLaserRadius;
+        private double myLaserDurchmesser;
         private View myView;
         double myRenderGenauigkeit; //Genauigkeit
 
         static decimal myWellenlänge = 632.8E-9m;
-        public Model(double d1, double d2, double xmax, int width, int height, double LaserRadius, double RenderGenauigkeit)
+        public Model(double d1, double d2, double xmax, int width, int height, double LaserDurchmesser, double RenderGenauigkeit)
         {
             myD1 = d1 * 1E-3;
             myD2 = d2 * 1E-6;
@@ -52,7 +52,7 @@ namespace MatrixTest
             myYmin = -myXmax;
             myBitmapWidth = width;
             myBitmapHeight = height;
-            myLaserRadius = LaserRadius;
+            myLaserDurchmesser = LaserDurchmesser;
             myRenderGenauigkeit = RenderGenauigkeit;
 
             newRelativePerPixel();
@@ -120,51 +120,22 @@ namespace MatrixTest
         }
 
         /// <summary>
-        /// Durchschnittsberechnung unter Berücksichtigung der Lasergrösse, momentan noch nicht verwendet
+        /// Durchschnittsberechnung unter Berücksichtigung der Lasergrösse
         /// </summary>
         /// <param name="x"></param>
         /// <returns></returns>
         public double InterferenzFunktionLaserGrösse(double x)
         {
-            double sum = 0;
-            double p = 0;
-            double LaserRadiusPerCount = myLaserRadius / myRenderGenauigkeit;
-            double RadPerCount = 2 * Math.PI / myRenderGenauigkeit;
-            double previousX = double.NaN;
-            double previousY = double.NaN;
-
-            for (double i = 0; i < myRenderGenauigkeit; i++)
-            {
-                double AbsLength = LaserRadiusPerCount * i;
-                for (double j = 0; j <= myRenderGenauigkeit; j++)
-                {
-                    double hx = AbsLength * Math.Cos(RadPerCount * j);
-                    double hy = AbsLength * Math.Sin(RadPerCount * j);
-                    if (previousX != hx && previousY != hy)
-                    {
-                        previousX = hx;
-                        previousY = hy;
-                        sum += InterferenzFunktion(x, hx, hy);
-                        p++;
-                    }
-                }
-            }
-            sum /= p;
-            return sum;
-        }
-
-        public double InterferenzFunktionLaserGrösse2(double x)
-        {
             double count = 100.0; //Genauigkeit
             double sum = 0;
             double p = 0;
-            double LaserRadiusPerCount = myLaserRadius * 2 / count;
+            double LaserRadiusPerCount = myLaserDurchmesser * 2 / count;
 
-            for (double i = -myLaserRadius; i <= myLaserRadius; i += LaserRadiusPerCount)
+            for (double i = -myLaserDurchmesser; i <= myLaserDurchmesser; i += LaserRadiusPerCount)
             {
-                for (double j = -myLaserRadius; j <= myLaserRadius; j += LaserRadiusPerCount)
+                for (double j = -myLaserDurchmesser; j <= myLaserDurchmesser; j += LaserRadiusPerCount)
                 {
-                    if (Math.Sqrt(Math.Pow(i, 2) + Math.Pow(j, 2)) <= myLaserRadius)
+                    if (Math.Sqrt(Math.Pow(i, 2) + Math.Pow(j, 2)) <= myLaserDurchmesser)
                     {
                         sum += InterferenzFunktion(x, j, i);
                         p++;
@@ -208,7 +179,7 @@ namespace MatrixTest
 
         public double LaserRadius
         {
-            set { myLaserRadius = value; }
+            set { myLaserDurchmesser = value; }
         }
 
         public double xmax

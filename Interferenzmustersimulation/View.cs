@@ -30,10 +30,7 @@ namespace MatrixTest
             for (int i = -myModel.Width / 2; i <= 0; i++)
             {
                 double x = i * myModel.relativePerPixel;
-                //double intensity = myModel.InterferenzFunktionLaserGrösse(x);
-                double intensity = myModel.InterferenzFunktionLaserGrösse2(x);
-                //double intensity = myModel.InterferenzFunktion(x);
-                //double intensity = Math.Abs(myModel.InterferenzFunktionLaserGrösse2(x) - myModel.InterferenzFunktionLaserGrösse(x));
+                double intensity = myModel.InterferenzFunktionLaserGrösse(x);
                 double size = 2 * -i;
                 Color IntensityColor = Color.FromArgb((int)Math.Round(255 * intensity, 0), 0, 0);
                 Brush IntensityBrush = new SolidBrush(IntensityColor);
