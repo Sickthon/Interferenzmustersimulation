@@ -72,7 +72,7 @@ namespace MatrixTest
             this.ControlPanel.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.ControlPanel.Location = new System.Drawing.Point(12, 12);
             this.ControlPanel.MaximumSize = new System.Drawing.Size(463, 211);
-            this.ControlPanel.MinimumSize = new System.Drawing.Size(463, 44);
+            this.ControlPanel.MinimumSize = new System.Drawing.Size(165, 44);
             this.ControlPanel.Name = "ControlPanel";
             this.ControlPanel.Size = new System.Drawing.Size(463, 211);
             this.ControlPanel.TabIndex = 34;

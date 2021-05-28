@@ -217,6 +217,10 @@ namespace MatrixTest
                 {
                     newY = ClientSize.Height - ControlPanel.Height;
                 }
+                if (ControlPanel.ClientRectangle.IntersectsWith(ControlBarPanel.ClientRectangle))
+                {
+                    ControlPanel.Update();
+                }
                 ControlPanel.Left = newX;
                 ControlPanel.Top = newY;
             }
@@ -230,21 +234,25 @@ namespace MatrixTest
         bool ControlPanelCollapsed = false;
         private void ControlPanelCollapsButton_Click(object sender, EventArgs e)
         {
-            int Distance = ControlPanel.MaximumSize.Height - ControlPanel.MinimumSize.Height;
+            int DistanceY = ControlPanel.MaximumSize.Height - ControlPanel.MinimumSize.Height;
+            int DistanceX = ControlPanel.MaximumSize.Width - ControlPanel.MinimumSize.Width;
             if (ControlPanelCollapsed)
             {
                 ControlPanel.Size = ControlPanel.MaximumSize;
-                RenderButton.Top += Distance;
-                ControlPanelCollapsButton.Top += Distance;
+                RenderButton.Top += DistanceY;
+                ControlPanelCollapsButton.Top += DistanceY;
+                ControlPanelCollapsButton.Left += DistanceX;
             }
             else
             {
                 ControlPanel.Size = ControlPanel.MinimumSize;
-                RenderButton.Top -= Distance;
-                ControlPanelCollapsButton.Top -= Distance;
+                RenderButton.Top -= DistanceY;
+                ControlPanelCollapsButton.Top -= DistanceY;
+                ControlPanelCollapsButton.Left -= DistanceX;
             }
             ControlSubPanel.Visible = !ControlSubPanel.Visible;
             ControlPanelCollapsed = !ControlPanelCollapsed;
+            ControlPanel.Update();
             ControlPanel.Invalidate();
         }
         #endregion
