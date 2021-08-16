@@ -121,7 +121,7 @@
     <value>17, 17</value>
   </metadata>
   <data name="RendergenauigkeitUpDown.ToolTip" xml:space="preserve">
-    <value>Zur Bestimmung des Interferenzmusters werden für jeden Punkt auf dem Fotowiderstand
+    <value>Zur Bestimmung des Interferenzmusters werden für jeden Punkt auf der Bildebene
 Lichtwellen von verschiedenen Emissionspunkten im Laser überlagert.
 Hierbei wird auf die Laserdioden-Ebene ein quadratisches Raster gelegt,
 sodass es zu einer dem Quadrat des eingegebenen Wertes entsprechender Anzahl Schnittpunkten kommt.

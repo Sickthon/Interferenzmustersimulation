@@ -39,9 +39,10 @@ namespace MatrixTest
         /// </summary>
         private double myLaserDurchmesser;
         private View myView;
-        double myRenderGenauigkeit; //Genauigkeit
+        private double myRenderGenauigkeit; //Genauigkeit
 
-        static decimal myWellenlänge = 632.8E-9m;
+        const decimal myWellenlänge = 632.8E-9m;
+        const double k = 2 * Math.PI / (double)myWellenlänge; //Wellenvektor
         public Model(double d1, double d2, double xmax, int width, int height, double LaserDurchmesser, double RenderGenauigkeit)
         {
             myD1 = d1 * 1E-3;
@@ -56,13 +57,22 @@ namespace MatrixTest
             myRenderGenauigkeit = RenderGenauigkeit;
 
             newRelativePerPixel();
+
+
         }
 
         public void notifyView()
         {
             if (myView != null)
             {
-                myView.DrawInterferencePattern();
+                if (myRenderGenauigkeit < 320)
+                {
+                    myView.DrawInterferencePattern();
+                }
+                else
+                {
+                    myView.DrawInterferencePatternWithThreading();
+                }
             }
         }
 
@@ -86,37 +96,29 @@ namespace MatrixTest
             {
                     new PointF(0, 0),
                     new PointF(1, 0)
-                };
+            };
             inverse.TransformPoints(pixel_pts);
             myRelativePerPixel = pixel_pts[1].X - pixel_pts[0].X;
             myRelativePerPixel /= 2;
-            //this.notifyView();
+
             inverse.Dispose();
         }
 
         /// <summary>
         /// Funktion, die Zeit wird als globale Variable verwendet
         /// </summary>
-        /// <param name="x">Die Variable bezeichnet den Abstand zum Mittelpunkt des Interferenzmusters auf dem optischen Schirm</param>
+        /// <param name="r">Die Variable bezeichnet den Abstand zum Mittelpunkt des Interferenzmusters auf der Bildebene in Z-Richtung</param>
+        /// <param name="hz">Die Variable bezeichnet den Abstand zum Mittelpunkt des Lasers in Z-Richtung</param>
         /// <param name="hx">Die Variable bezeichnet den Abstand zum Mittelpunkt des Lasers in X-Richtung</param>
-        /// <param name="hy">Die Variable bezeichnet den Abstand zum Mittelpunkt des Lasers in Y-Richtung</param>
         /// <returns>Normierte Superposition zwischen 0 und 1</returns>
-        public double InterferenzFunktion(double x, double hx = 0, double hy = 0)
+        public double InterferenzFunktion(double r, double hz = 0, double hx = 0)
         {
-            double k = 2 * Math.PI / (double)myWellenlänge; //Wellenvektor
-            double phi1 = 0; //Phasenverschiebung Welle 1
-            double phi2 = 0; //Phasenverschiebund Welle 2
-            double l1 = Math.Sqrt(Math.Pow(myD1, 2) + Math.Pow(x - hx, 2) + Math.Pow(hy, 2)); //Distanz, welche die erste Welle zurücklegt
-            double l2 = Math.Sqrt(Math.Pow(myD1 + myD2, 2) + Math.Pow(x - hx, 2) + Math.Pow(hy, 2)); //Distanz, welche die zweite Welle zurücklegt
+            double l1 = Math.Sqrt(Math.Pow(myD1, 2) + Math.Pow(r - hz, 2) + Math.Pow(hx, 2)); //Distanz, welche die erste Welle zurücklegt
+            double l2 = Math.Sqrt(Math.Pow(myD1 + myD2, 2) + Math.Pow(r - hz, 2) + Math.Pow(hx, 2)); //Distanz, welche die zweite Welle zurücklegt
 
-            double psi1 = k * l1 + phi1;
-            double psi2 = k * l2 + phi2;
-            double Xc = Math.Cos(psi1) + Math.Cos(psi2);
-            double Xs = Math.Sin(psi1) + Math.Sin(psi2);
+            double Intensität = 2 * Math.Cos((l1 - l2) * k) + 2;
 
-            double Intensität = Math.Max(Math.Pow(Xc, 2) + Math.Pow(Xs, 2), 0);
-
-            return Intensität / 4;
+            return Intensität / 4; //Teilen durch Maximalwert, um Gradient zwischen 0 und 1 zu erhalten
         }
 
         /// <summary>
@@ -126,16 +128,16 @@ namespace MatrixTest
         /// <returns></returns>
         public double InterferenzFunktionLaserGrösse(double x)
         {
-            double count = 100.0; //Genauigkeit
             double sum = 0;
             double p = 0;
-            double LaserRadiusPerCount = myLaserDurchmesser * 2 / count;
+            double LaserRadius = myLaserDurchmesser / 2;
+            double LaserDistancePerCount = myLaserDurchmesser / myRenderGenauigkeit;
 
-            for (double i = -myLaserDurchmesser; i <= myLaserDurchmesser; i += LaserRadiusPerCount)
+            for (double i = -LaserRadius; i <= LaserRadius; i += LaserDistancePerCount)
             {
-                for (double j = -myLaserDurchmesser; j <= myLaserDurchmesser; j += LaserRadiusPerCount)
+                for (double j = -LaserRadius; j <= LaserRadius; j += LaserDistancePerCount)
                 {
-                    if (Math.Sqrt(Math.Pow(i, 2) + Math.Pow(j, 2)) <= myLaserDurchmesser)
+                    if (Math.Sqrt(Math.Pow(i, 2) + Math.Pow(j, 2)) <= LaserRadius)
                     {
                         sum += InterferenzFunktion(x, j, i);
                         p++;
@@ -169,11 +171,13 @@ namespace MatrixTest
 
         public double d1
         {
+            get { return myD1; }
             set { myD1 = value * 1E-3; } // Millimeter zu Meter
         }
 
         public double d2
         {
+            get { return myD2; }
             set { myD2 = value * 1E-6; } // Mikrometer zu Meter
         }
 

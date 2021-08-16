@@ -13,7 +13,7 @@ namespace MatrixTest
      * Mit einem Aufruf des Paint-Ereignisses des Fensters im Hauptprogramm wird diese Bitmap im Fenster gezeichnet.
      * 
      * 26.04.2021:
-     * Es wird nun nur noch die quadrierte Amplitude zur Berechnung des Interfernezmusters verwendet.
+     * Es wird nun nur noch die quadrierte Amplitude zur Berechnung des Interferenzmusters verwendet.
      * Des Weiteren lässt sich nun die Grösse des Laserstrahls miteinberechnen. Um alle Punkte im Laserstrahl gleich zu gewichten, 
      * wird über den kreisförmigen Laserquerschnitt ein kartesisches Koordinatensystem gelegt und diejenigen Punkte verwendet, die sich innerhalb des Kreises befinden.
      * Neu hinzugekommen ist das Eingabefeld "R.-L.-Veränderung", mit welchem sich steuern lässt, wie stark sich der relative Längenunterschied be einem Klick verändert.
@@ -31,10 +31,10 @@ namespace MatrixTest
         private void Form1_Load(object sender, EventArgs e)
         {
             ControlBarPanel.Left = ClientSize.Width - ControlBarPanel.Width;
-            double length = (double)numericUpDown2.Value / 2.0;
+            double length = (double)InterferenzmustergrösseUpDown2.Value / 2.0;
             int BitmapHeight = ClientSize.Height;
             InterferencePatternModel = new Model((double)Länge1UpDown.Value, (double)Länge2RelativUpDown.Value,
-                length, BitmapHeight, BitmapHeight, (double)numericUpDown3.Value / 2.0, (double)RendergenauigkeitUpDown.Value);
+                length, BitmapHeight, BitmapHeight, (double)LaserDurchmesserUpDown3.Value / 2.0, (double)RendergenauigkeitUpDown.Value);
             InterferencePatternModel.ModelView = new View(InterferencePatternModel);
             RLVeränderung.Text = Länge2RelativUpDown.Increment.ToString();
         }
@@ -61,17 +61,27 @@ namespace MatrixTest
 
         private void Länge2RelativUpDown_ValueChanged(object sender, EventArgs e)
         {
-            InterferencePatternModel.d2 = (double)Länge2RelativUpDown.Value;
+            if (InterferencePatternModel.d1 + (double)Länge2RelativUpDown.Value * 1E-6 >= 0)
+            {
+                InterferencePatternModel.d2 = (double)Länge2RelativUpDown.Value;
+            }
+            else
+            {
+                Länge2RelativUpDown.Value = (decimal)(InterferencePatternModel.d2 * 1E6);
+                MessageBox.Show("Der zweite Arm kann keine negative Länge besitzen, da dies einerseits keinen Sinn ergibt " +
+                    "und andererseits erhielte man ein falsches Interferenzmuster, schliesslich werden die Zahlen für die Berechnung quadriert. " +
+                    "Diese Erkenntnis kostete mich übrigens den letzten Nachmittag meiner Sommerferien.");
+            }
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            InterferencePatternModel.xmax = (double)numericUpDown2.Value / 2.0;
+            InterferencePatternModel.xmax = (double)InterferenzmustergrösseUpDown2.Value / 2.0;
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            InterferencePatternModel.LaserRadius = (double)numericUpDown3.Value / 2.0;
+            InterferencePatternModel.LaserRadius = (double)LaserDurchmesserUpDown3.Value / 2.0;
         }
 
         private void toWavelengthButton_Click(object sender, EventArgs e)
@@ -93,19 +103,25 @@ namespace MatrixTest
         }
         private void RLVeränderung_TextChanged(object sender, EventArgs e)
         {
+            decimal result;
+            string textBoxText = RLVeränderung.Text;
             try
             {
-                string textBoxText = RLVeränderung.Text;
                 int lastChar = Convert.ToInt32(textBoxText[textBoxText.Length - 1]);
                 if (48 <= lastChar && lastChar <= 57)
                 {
                     System.Data.DataTable table = new System.Data.DataTable();
-                    decimal result = (decimal)table.Compute(textBoxText, "");
+                    result = (decimal)table.Compute(textBoxText, "");
                     Länge2RelativUpDown.Increment = result;
                     RLVeränderung.Text = Convert.ToString(result);
                 }
             }
-            catch { }
+            catch 
+            {
+                decimal.TryParse(textBoxText, out result);
+                Länge2RelativUpDown.Increment = result;
+                RLVeränderung.Text = Convert.ToString(result);
+            }
         }
         #endregion
 
@@ -256,6 +272,5 @@ namespace MatrixTest
             ControlPanel.Invalidate();
         }
         #endregion
-
     }
 }
