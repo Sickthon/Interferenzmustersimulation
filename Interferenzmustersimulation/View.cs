@@ -29,34 +29,18 @@ namespace MatrixTest
             }
         }
 
-
-        public void DrawInterferencePattern()
-        {
-            Graphics g = Graphics.FromImage(myBild);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.Clear(Color.Black);
-
-            for (int i = -myModel.Width / 2; i <= 0; i++)
-            { 
-                double x = i * myModel.relativePerPixel;
-                double intensity = myModel.InterferenzFunktionLaserGrösse(x);
-                Color IntensityColor = Color.FromArgb(Convert.ToInt32(255 * intensity), 0, 0);
-                Brush IntensityBrush = new SolidBrush(IntensityColor);
-                double size = 2 * -i;
-                g.FillEllipse(IntensityBrush, i + myModel.Width / 2, myModel.Height / 2 + i, (float)size, (float)size);
-            }
-
-            g.Dispose();
-            myForm.Invalidate();
-        }
-
         public void DrawInterferencePatternWithThreading()
         {
             int i = -myModel.Width / 2;
 
             Brush[] myIntensityBrushesArray = new Brush[-i + 1];
 
-            while(i <= 0)
+            int range = myModel.Width / 2 / myWorkerList.Count;
+
+            int FinishCalls = 0;
+            int ThreadCalls = 0;
+
+            while (i <= 0)
             {
                 for (int q = 0; q < myWorkerList.Count; q++)
                 {
@@ -65,7 +49,8 @@ namespace MatrixTest
                         myWorkerList[q] = new Thread(ThreadWorker);
 
                         myWorkerList[q].Start(i);
-                        i++;
+                        i += range;
+                        ThreadCalls++;
                     }
                 }
             }
@@ -73,42 +58,40 @@ namespace MatrixTest
             void ThreadWorker(object input)
             {
                 int myi = (int)input;
+                int limit = myi + range;
 
-                double x = myi * myModel.relativePerPixel;
-                double intensity = myModel.InterferenzFunktionLaserGrösse(x);
-                Color IntensityColor = Color.FromArgb(Convert.ToInt32(255 * intensity), 0, 0);
-                myIntensityBrushesArray[-myi] = new SolidBrush(IntensityColor);
-
+                for (int myj = myi; myj < limit && myj <= 0; myj++)
+                {
+                    double x = myj * myModel.relativePerPixel;
+                    double intensity = myModel.InterferenzFunktionLaserGrösse(x);
+                    Color IntensityColor = Color.FromArgb(Convert.ToInt32(255 * intensity), 0, 0);
+                    myIntensityBrushesArray[-myj] = new SolidBrush(IntensityColor);
+                }
+                Finish();
                 return;
             }
 
-            bool allThreadsfinished;
-            do
+            void Finish()
             {
-                allThreadsfinished = true;
-                for (int q = 0; q < myWorkerList.Count; q++)
+                FinishCalls++;
+
+                if (FinishCalls == ThreadCalls)
                 {
-                    if (myWorkerList[q] != null && myWorkerList[q].IsAlive)
+                    Graphics g = Graphics.FromImage(myBild);
+                    g.SmoothingMode = SmoothingMode.AntiAlias;
+                    g.Clear(Color.Black);
+
+
+                    for (int a = myIntensityBrushesArray.Length - 1; a >= 0; a--)
                     {
-                        allThreadsfinished = false;
+                        double size = 2 * -a;
+                        g.FillEllipse(myIntensityBrushesArray[a], a + myModel.Width / 2, myModel.Height / 2 + a, (float)size, (float)size);
                     }
+
+                    g.Dispose();
+                    myForm.Invalidate();
                 }
             }
-            while (!allThreadsfinished);
-
-            Graphics g = Graphics.FromImage(myBild);
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.Clear(Color.Black);
-
-
-            for (int a = myIntensityBrushesArray.Length - 1; a >= 0; a--)
-            {
-                double size = 2 * -a;
-                g.FillEllipse(myIntensityBrushesArray[a], a + myModel.Width / 2, myModel.Height / 2 + a, (float)size, (float)size);
-            }
-
-            g.Dispose();
-            myForm.Invalidate();
         }
 
         public Bitmap ModelViewImage

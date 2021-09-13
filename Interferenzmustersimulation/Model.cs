@@ -57,22 +57,13 @@ namespace MatrixTest
             myRenderGenauigkeit = RenderGenauigkeit;
 
             newRelativePerPixel();
-
-
         }
 
         public void notifyView()
         {
             if (myView != null)
             {
-                if (myRenderGenauigkeit < 320)
-                {
-                    myView.DrawInterferencePattern();
-                }
-                else
-                {
-                    myView.DrawInterferencePatternWithThreading();
-                }
+                myView.DrawInterferencePatternWithThreading();
             }
         }
 
@@ -116,9 +107,9 @@ namespace MatrixTest
             double l1 = Math.Sqrt(Math.Pow(myD1, 2) + Math.Pow(r - hz, 2) + Math.Pow(hx, 2)); //Distanz, welche die erste Welle zurücklegt
             double l2 = Math.Sqrt(Math.Pow(myD1 + myD2, 2) + Math.Pow(r - hz, 2) + Math.Pow(hx, 2)); //Distanz, welche die zweite Welle zurücklegt
 
-            double Intensität = 2 * Math.Cos((l1 - l2) * k) + 2;
+            double Intensität = Math.Cos((l1 - l2) * k) + 1;
 
-            return Intensität / 4; //Teilen durch Maximalwert, um Gradient zwischen 0 und 1 zu erhalten
+            return Intensität / 2; //Teilen durch Maximalwert, um Gradient zwischen 0 und 1 zu erhalten
         }
 
         /// <summary>

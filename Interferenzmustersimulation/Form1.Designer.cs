@@ -32,7 +32,7 @@ namespace MatrixTest
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Interferenzmustersimulation));
             this.ControlPanel = new System.Windows.Forms.Panel();
-            this.ControlPanelCollapsButton = new System.Windows.Forms.Button();
+            this.ControlPanelCollapseButton = new System.Windows.Forms.Button();
             this.RenderButton = new System.Windows.Forms.Button();
             this.ControlSubPanel = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -66,7 +66,7 @@ namespace MatrixTest
             // ControlPanel
             // 
             this.ControlPanel.BackColor = System.Drawing.Color.DarkBlue;
-            this.ControlPanel.Controls.Add(this.ControlPanelCollapsButton);
+            this.ControlPanel.Controls.Add(this.ControlPanelCollapseButton);
             this.ControlPanel.Controls.Add(this.RenderButton);
             this.ControlPanel.Controls.Add(this.ControlSubPanel);
             this.ControlPanel.Cursor = System.Windows.Forms.Cursors.SizeAll;
@@ -81,17 +81,17 @@ namespace MatrixTest
             this.ControlPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ControlPanel_MouseMove);
             this.ControlPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ControlPanel_MouseUp);
             // 
-            // ControlPanelCollapsButton
+            // ControlPanelCollapseButton
             // 
-            this.ControlPanelCollapsButton.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.ControlPanelCollapsButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.ControlPanelCollapsButton.Location = new System.Drawing.Point(438, 186);
-            this.ControlPanelCollapsButton.Name = "ControlPanelCollapsButton";
-            this.ControlPanelCollapsButton.Size = new System.Drawing.Size(25, 25);
-            this.ControlPanelCollapsButton.TabIndex = 48;
-            this.ControlPanelCollapsButton.Text = "^";
-            this.ControlPanelCollapsButton.UseVisualStyleBackColor = true;
-            this.ControlPanelCollapsButton.Click += new System.EventHandler(this.ControlPanelCollapsButton_Click);
+            this.ControlPanelCollapseButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ControlPanelCollapseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.ControlPanelCollapseButton.Location = new System.Drawing.Point(438, 186);
+            this.ControlPanelCollapseButton.Name = "ControlPanelCollapseButton";
+            this.ControlPanelCollapseButton.Size = new System.Drawing.Size(25, 25);
+            this.ControlPanelCollapseButton.TabIndex = 48;
+            this.ControlPanelCollapseButton.Text = "^";
+            this.ControlPanelCollapseButton.UseVisualStyleBackColor = true;
+            this.ControlPanelCollapseButton.Click += new System.EventHandler(this.ControlPanelCollapseButton_Click);
             // 
             // RenderButton
             // 
@@ -201,7 +201,7 @@ namespace MatrixTest
             this.Länge1UpDown.TabIndex = 36;
             this.toolTip1.SetToolTip(this.Länge1UpDown, "Die Länge des arretierten Armes vom Laser bis zur Bildebene");
             this.Länge1UpDown.Value = new decimal(new int[] {
-            300,
+            800,
             0,
             0,
             0});
@@ -228,7 +228,7 @@ namespace MatrixTest
             this.Länge2RelativUpDown.TabIndex = 37;
             this.toolTip1.SetToolTip(this.Länge2RelativUpDown, "Die relative Längendifferenz des längenverstellbaren Armes zum arretierten Arm");
             this.Länge2RelativUpDown.Value = new decimal(new int[] {
-            3000,
+            30000,
             0,
             0,
             0});
@@ -265,11 +265,9 @@ namespace MatrixTest
             this.RLVeränderung.Name = "RLVeränderung";
             this.RLVeränderung.Size = new System.Drawing.Size(124, 22);
             this.RLVeränderung.TabIndex = 43;
-            this.toolTip1.SetToolTip(this.RLVeränderung, "Die Änderung bei einem Klick auf das Control \"Relativer L.-Unterschied [μm]\"\r\nDad" +
-        "urch lässt sich die relative Längendifferenz um ein Vielfaches der Wellenlänge λ" +
-        " verändern.\r\n\r\n");
+            this.RLVeränderung.Text = "1.0";
+            this.toolTip1.SetToolTip(this.RLVeränderung, resources.GetString("RLVeränderung.ToolTip"));
             this.RLVeränderung.WordWrap = false;
-            this.RLVeränderung.TextChanged += new System.EventHandler(this.RLVeränderung_TextChanged);
             this.RLVeränderung.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RLVeränderung_KeyDown);
             // 
             // InterferenzmustergrösseUpDown2
@@ -295,7 +293,7 @@ namespace MatrixTest
             this.InterferenzmustergrösseUpDown2.TabIndex = 39;
             this.toolTip1.SetToolTip(this.InterferenzmustergrösseUpDown2, "Der Durchmesser des Interferenzmusters, das auf der Bildebene entsteht.");
             this.InterferenzmustergrösseUpDown2.Value = new decimal(new int[] {
-            120,
+            80,
             0,
             0,
             0});
@@ -343,10 +341,10 @@ namespace MatrixTest
         "jeden Punkt auf der Bildebene\r\nLichtwellen von verschiedenen Emissionspunkten im" +
         " Laser überlagert.");
             this.LaserDurchmesserUpDown3.Value = new decimal(new int[] {
-            1,
+            15,
             0,
             0,
-            196608});
+            262144});
             this.LaserDurchmesserUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
             // 
             // ControlBarPanel
@@ -466,7 +464,7 @@ namespace MatrixTest
         private System.Windows.Forms.Label FormCloseLabel;
         private System.Windows.Forms.NumericUpDown RendergenauigkeitUpDown;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button ControlPanelCollapsButton;
+        private System.Windows.Forms.Button ControlPanelCollapseButton;
         private System.Windows.Forms.Panel ControlSubPanel;
         private System.Windows.Forms.Label FormHelpLabel;
         private System.Windows.Forms.ToolTip toolTip1;
