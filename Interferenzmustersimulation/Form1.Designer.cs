@@ -151,7 +151,7 @@ namespace MatrixTest
             0,
             0});
             this.RendergenauigkeitUpDown.Minimum = new decimal(new int[] {
-            2,
+            10,
             0,
             0,
             0});
