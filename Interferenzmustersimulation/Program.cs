@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace MatrixTest
+namespace InterferenzmusterSimulation
 {
     static class Program
     {

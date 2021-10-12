@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace MatrixTest
+namespace InterferenzmusterSimulation
 {
     class View
     {
@@ -16,6 +16,7 @@ namespace MatrixTest
         private Model myModel;
         private Form myForm;
         private List<Thread> myWorkerList = new List<Thread>();
+        private bool myRenderingFinished = true;
 
         public View(Model model)
         {
@@ -31,6 +32,7 @@ namespace MatrixTest
 
         public void DrawInterferencePatternWithThreading()
         {
+            myRenderingFinished = false;
             int i = -myModel.Width / 2;
 
             Brush[] myIntensityBrushesArray = new Brush[-i + 1];
@@ -89,6 +91,7 @@ namespace MatrixTest
                     }
 
                     g.Dispose();
+                    myRenderingFinished = true;
                     myForm.Invalidate();
                 }
             }
@@ -97,6 +100,11 @@ namespace MatrixTest
         public Bitmap ModelViewImage
         {
             get { return myBild; }
+        }
+
+        public bool RenderingFinished
+        {
+            get { return myRenderingFinished; }
         }
     }
 }

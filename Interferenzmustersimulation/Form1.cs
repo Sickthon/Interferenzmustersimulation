@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace MatrixTest
+namespace InterferenzmusterSimulation
 {
     public partial class Interferenzmustersimulation : Form
     {
@@ -21,20 +21,32 @@ namespace MatrixTest
             InterferencePatternModel = new Model((double)Länge1UpDown.Value, (double)Länge2RelativUpDown.Value,
                 length, BitmapHeight, BitmapHeight, (double)LaserDurchmesserUpDown3.Value / 2.0, (double)RendergenauigkeitUpDown.Value);
             InterferencePatternModel.ModelView = new View(InterferencePatternModel);
-            RLVeränderung.Text = Convert.ToString(Länge2RelativUpDown.Increment) + ".0";
+            RLVeränderungTextBox.Text = Convert.ToString(Länge2RelativUpDown.Increment) + ".0";
         }
         private void RenderButton_Click(object sender, EventArgs e)
         {
             InterferencePatternModel.notifyView();
+            ChangeRenderButtonvisibility(false);
         }
+
+        public void ChangeRenderButtonvisibility(bool visible)
+        {
+            RenderButton.Visible = visible;
+        }
+
+        Bitmap CachedRendering;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (InterferencePatternModel != null)
             {
+                if (InterferencePatternModel.ModelView.RenderingFinished)
+                { 
+                    CachedRendering = new Bitmap(InterferencePatternModel.ModelView.ModelViewImage);
+                    ChangeRenderButtonvisibility(true);
+                }
                 Graphics g = e.Graphics;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
-                Bitmap ImageOutput = InterferencePatternModel.ModelView.ModelViewImage;
-                g.DrawImage(ImageOutput, new Point((ClientSize.Width - ImageOutput.Width) / 2, 0));
+                g.DrawImage(CachedRendering, new Point((ClientSize.Width - CachedRendering.Width) / 2, 0));
             }
         }
 
@@ -72,7 +84,7 @@ namespace MatrixTest
         private void toWavelengthButton_Click(object sender, EventArgs e)
         {
             Länge2RelativUpDown.Increment = Model.Wellenlänge * 1E6m;
-            RLVeränderung.Text = Convert.ToString(Länge2RelativUpDown.Increment);
+            RLVeränderungTextBox.Text = Convert.ToString(Länge2RelativUpDown.Increment);
         }
 
         private void RendergenauigkeitUpDown_ValueChanged(object sender, EventArgs e)
@@ -85,13 +97,13 @@ namespace MatrixTest
             {
                 e.SuppressKeyPress = true;
                 decimal result;
-                string textBoxText = RLVeränderung.Text;
+                string textBoxText = RLVeränderungTextBox.Text;
                 try
                 {
                     System.Data.DataTable table = new System.Data.DataTable();
                     result = (decimal)table.Compute(textBoxText, "");
                     Länge2RelativUpDown.Increment = result;
-                    RLVeränderung.Text = Convert.ToString(result);
+                    RLVeränderungTextBox.Text = Convert.ToString(result);
                 }
                 catch
                 {
@@ -99,7 +111,7 @@ namespace MatrixTest
                     Länge2RelativUpDown.Increment = result;
                     string Stringresult = Convert.ToString(result);
                     if (!Stringresult.Contains(".")) { Stringresult += ".0"; }
-                    RLVeränderung.Text = Stringresult;
+                    RLVeränderungTextBox.Text = Stringresult;
 
                 }
             }
@@ -147,8 +159,8 @@ namespace MatrixTest
         }
         private void FormHelpLabel_Click(object sender, EventArgs e)
         {
-            toolTip1.Active = !toolTip1.Active;
-            if (toolTip1.Active)
+            toolTip.Active = !toolTip.Active;
+            if (toolTip.Active)
             {
                 Font LabelFont = FormHelpLabel.Font;
                 FormHelpLabel.Font = new Font(LabelFont.Name, LabelFont.Size, FontStyle.Strikeout);
@@ -180,7 +192,7 @@ namespace MatrixTest
         #region ControlPanel
         private void ControlPanel_Paint(object sender, PaintEventArgs e)
         {
-            ControlPaint.DrawBorder(e.Graphics, this.ControlPanel.ClientRectangle, Color.White, ButtonBorderStyle.Solid);
+            ControlPaint.DrawBorder(e.Graphics, ControlPanel.ClientRectangle, Color.White, ButtonBorderStyle.Solid);
         }
 
         bool MoveControlmouseDown;
@@ -193,6 +205,7 @@ namespace MatrixTest
             ControlMouseDownY = e.Y;
         }
 
+        int RedrawCount = 0;
         private void ControlPanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (MoveControlmouseDown)
@@ -216,12 +229,18 @@ namespace MatrixTest
                 {
                     newY = ClientSize.Height - ControlPanel.Height;
                 }
-                if (ControlPanel.ClientRectangle.IntersectsWith(ControlBarPanel.ClientRectangle))
+                if (ControlPanel.Bounds.IntersectsWith(ControlBarPanel.Bounds))
                 {
-                    ControlPanel.Update();
+                    RedrawCount = 3;
                 }
                 ControlPanel.Left = newX;
                 ControlPanel.Top = newY;
+
+                if (RedrawCount > 0)
+                {
+                    ControlBarPanel.Refresh();
+                    RedrawCount--;
+                }
             }
         }
 

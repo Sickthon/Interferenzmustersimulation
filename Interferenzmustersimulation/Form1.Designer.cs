@@ -1,5 +1,5 @@
 ﻿
-namespace MatrixTest
+namespace InterferenzmusterSimulation
 {
     partial class Interferenzmustersimulation
     {
@@ -35,24 +35,24 @@ namespace MatrixTest
             this.ControlPanelCollapseButton = new System.Windows.Forms.Button();
             this.RenderButton = new System.Windows.Forms.Button();
             this.ControlSubPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.Länge1Label = new System.Windows.Forms.Label();
             this.RendergenauigkeitUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.Länge2RelativLabel = new System.Windows.Forms.Label();
+            this.RendergenauigkeitLabel = new System.Windows.Forms.Label();
             this.Länge1UpDown = new System.Windows.Forms.NumericUpDown();
             this.Länge2RelativUpDown = new System.Windows.Forms.NumericUpDown();
             this.toWavelengthButton = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.RLVeränderung = new System.Windows.Forms.TextBox();
+            this.InterferenzmustergrösseLabel = new System.Windows.Forms.Label();
+            this.RLVeränderungTextBox = new System.Windows.Forms.TextBox();
             this.InterferenzmustergrösseUpDown2 = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.RLVeränderungLabel = new System.Windows.Forms.Label();
+            this.LaserDurchmesserLabel = new System.Windows.Forms.Label();
             this.LaserDurchmesserUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.ControlBarPanel = new System.Windows.Forms.Panel();
             this.FormHelpLabel = new System.Windows.Forms.Label();
             this.FormMinimizeLabel = new System.Windows.Forms.Label();
             this.FormCloseLabel = new System.Windows.Forms.Label();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ControlPanel.SuspendLayout();
             this.ControlSubPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RendergenauigkeitUpDown)).BeginInit();
@@ -107,18 +107,18 @@ namespace MatrixTest
             // ControlSubPanel
             // 
             this.ControlSubPanel.BackColor = System.Drawing.Color.Transparent;
-            this.ControlSubPanel.Controls.Add(this.label1);
+            this.ControlSubPanel.Controls.Add(this.Länge1Label);
             this.ControlSubPanel.Controls.Add(this.RendergenauigkeitUpDown);
-            this.ControlSubPanel.Controls.Add(this.label2);
-            this.ControlSubPanel.Controls.Add(this.label3);
+            this.ControlSubPanel.Controls.Add(this.Länge2RelativLabel);
+            this.ControlSubPanel.Controls.Add(this.RendergenauigkeitLabel);
             this.ControlSubPanel.Controls.Add(this.Länge1UpDown);
             this.ControlSubPanel.Controls.Add(this.Länge2RelativUpDown);
             this.ControlSubPanel.Controls.Add(this.toWavelengthButton);
-            this.ControlSubPanel.Controls.Add(this.label5);
-            this.ControlSubPanel.Controls.Add(this.RLVeränderung);
+            this.ControlSubPanel.Controls.Add(this.InterferenzmustergrösseLabel);
+            this.ControlSubPanel.Controls.Add(this.RLVeränderungTextBox);
             this.ControlSubPanel.Controls.Add(this.InterferenzmustergrösseUpDown2);
-            this.ControlSubPanel.Controls.Add(this.label6);
-            this.ControlSubPanel.Controls.Add(this.label4);
+            this.ControlSubPanel.Controls.Add(this.RLVeränderungLabel);
+            this.ControlSubPanel.Controls.Add(this.LaserDurchmesserLabel);
             this.ControlSubPanel.Controls.Add(this.LaserDurchmesserUpDown3);
             this.ControlSubPanel.Location = new System.Drawing.Point(3, 3);
             this.ControlSubPanel.MaximumSize = new System.Drawing.Size(457, 160);
@@ -129,15 +129,15 @@ namespace MatrixTest
             this.ControlSubPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ControlPanel_MouseMove);
             this.ControlSubPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ControlPanel_MouseUp);
             // 
-            // label1
+            // Länge1Label
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 17);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "Länge [mm]";
+            this.Länge1Label.AutoSize = true;
+            this.Länge1Label.ForeColor = System.Drawing.Color.White;
+            this.Länge1Label.Location = new System.Drawing.Point(0, 0);
+            this.Länge1Label.Name = "Länge1Label";
+            this.Länge1Label.Size = new System.Drawing.Size(82, 17);
+            this.Länge1Label.TabIndex = 34;
+            this.Länge1Label.Text = "Länge [mm]";
             // 
             // RendergenauigkeitUpDown
             // 
@@ -158,7 +158,7 @@ namespace MatrixTest
             this.RendergenauigkeitUpDown.Name = "RendergenauigkeitUpDown";
             this.RendergenauigkeitUpDown.Size = new System.Drawing.Size(123, 22);
             this.RendergenauigkeitUpDown.TabIndex = 47;
-            this.toolTip1.SetToolTip(this.RendergenauigkeitUpDown, resources.GetString("RendergenauigkeitUpDown.ToolTip"));
+            this.toolTip.SetToolTip(this.RendergenauigkeitUpDown, resources.GetString("RendergenauigkeitUpDown.ToolTip"));
             this.RendergenauigkeitUpDown.Value = new decimal(new int[] {
             100,
             0,
@@ -166,24 +166,24 @@ namespace MatrixTest
             0});
             this.RendergenauigkeitUpDown.ValueChanged += new System.EventHandler(this.RendergenauigkeitUpDown_ValueChanged);
             // 
-            // label2
+            // Länge2RelativLabel
             // 
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(0, 54);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(194, 17);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "Relativer L.-Unterschied [μm]";
+            this.Länge2RelativLabel.ForeColor = System.Drawing.Color.White;
+            this.Länge2RelativLabel.Location = new System.Drawing.Point(0, 54);
+            this.Länge2RelativLabel.Name = "Länge2RelativLabel";
+            this.Länge2RelativLabel.Size = new System.Drawing.Size(194, 17);
+            this.Länge2RelativLabel.TabIndex = 35;
+            this.Länge2RelativLabel.Text = "Relativer L.-Unterschied [μm]";
             // 
-            // label3
+            // RendergenauigkeitLabel
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(255, 112);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(128, 17);
-            this.label3.TabIndex = 46;
-            this.label3.Text = "Rendergenauigkeit";
+            this.RendergenauigkeitLabel.AutoSize = true;
+            this.RendergenauigkeitLabel.ForeColor = System.Drawing.Color.White;
+            this.RendergenauigkeitLabel.Location = new System.Drawing.Point(255, 112);
+            this.RendergenauigkeitLabel.Name = "RendergenauigkeitLabel";
+            this.RendergenauigkeitLabel.Size = new System.Drawing.Size(128, 17);
+            this.RendergenauigkeitLabel.TabIndex = 46;
+            this.RendergenauigkeitLabel.Text = "Rendergenauigkeit";
             // 
             // Länge1UpDown
             // 
@@ -199,7 +199,7 @@ namespace MatrixTest
             this.Länge1UpDown.Name = "Länge1UpDown";
             this.Länge1UpDown.Size = new System.Drawing.Size(124, 22);
             this.Länge1UpDown.TabIndex = 36;
-            this.toolTip1.SetToolTip(this.Länge1UpDown, "Die Länge des arretierten Armes vom Laser bis zur Bildebene");
+            this.toolTip.SetToolTip(this.Länge1UpDown, "Die Länge des arretierten Armes vom Laser bis zur Bildebene");
             this.Länge1UpDown.Value = new decimal(new int[] {
             800,
             0,
@@ -226,7 +226,7 @@ namespace MatrixTest
             this.Länge2RelativUpDown.Name = "Länge2RelativUpDown";
             this.Länge2RelativUpDown.Size = new System.Drawing.Size(123, 22);
             this.Länge2RelativUpDown.TabIndex = 37;
-            this.toolTip1.SetToolTip(this.Länge2RelativUpDown, "Die relative Längendifferenz des längenverstellbaren Armes zum arretierten Arm");
+            this.toolTip.SetToolTip(this.Länge2RelativUpDown, "Die relative Längendifferenz des längenverstellbaren Armes zum arretierten Arm");
             this.Länge2RelativUpDown.Value = new decimal(new int[] {
             30000,
             0,
@@ -246,29 +246,29 @@ namespace MatrixTest
             this.toWavelengthButton.UseVisualStyleBackColor = true;
             this.toWavelengthButton.Click += new System.EventHandler(this.toWavelengthButton_Click);
             // 
-            // label5
+            // InterferenzmustergrösseLabel
             // 
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(255, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(199, 17);
-            this.label5.TabIndex = 38;
-            this.label5.Text = "Interferenzmustergrösse [mm]";
+            this.InterferenzmustergrösseLabel.ForeColor = System.Drawing.Color.White;
+            this.InterferenzmustergrösseLabel.Location = new System.Drawing.Point(255, 0);
+            this.InterferenzmustergrösseLabel.Name = "InterferenzmustergrösseLabel";
+            this.InterferenzmustergrösseLabel.Size = new System.Drawing.Size(199, 17);
+            this.InterferenzmustergrösseLabel.TabIndex = 38;
+            this.InterferenzmustergrösseLabel.Text = "Interferenzmustergrösse [mm]";
             // 
-            // RLVeränderung
+            // RLVeränderungTextBox
             // 
-            this.RLVeränderung.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.RLVeränderung.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.RLVeränderung.Location = new System.Drawing.Point(3, 132);
-            this.RLVeränderung.MinimumSize = new System.Drawing.Size(5, 18);
-            this.RLVeränderung.Multiline = true;
-            this.RLVeränderung.Name = "RLVeränderung";
-            this.RLVeränderung.Size = new System.Drawing.Size(124, 22);
-            this.RLVeränderung.TabIndex = 43;
-            this.RLVeränderung.Text = "1.0";
-            this.toolTip1.SetToolTip(this.RLVeränderung, resources.GetString("RLVeränderung.ToolTip"));
-            this.RLVeränderung.WordWrap = false;
-            this.RLVeränderung.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RLVeränderung_KeyDown);
+            this.RLVeränderungTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RLVeränderungTextBox.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.RLVeränderungTextBox.Location = new System.Drawing.Point(3, 132);
+            this.RLVeränderungTextBox.MinimumSize = new System.Drawing.Size(5, 18);
+            this.RLVeränderungTextBox.Multiline = true;
+            this.RLVeränderungTextBox.Name = "RLVeränderungTextBox";
+            this.RLVeränderungTextBox.Size = new System.Drawing.Size(124, 22);
+            this.RLVeränderungTextBox.TabIndex = 43;
+            this.RLVeränderungTextBox.Text = "1.0";
+            this.toolTip.SetToolTip(this.RLVeränderungTextBox, resources.GetString("RLVeränderungTextBox.ToolTip"));
+            this.RLVeränderungTextBox.WordWrap = false;
+            this.RLVeränderungTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RLVeränderung_KeyDown);
             // 
             // InterferenzmustergrösseUpDown2
             // 
@@ -291,7 +291,7 @@ namespace MatrixTest
             this.InterferenzmustergrösseUpDown2.Name = "InterferenzmustergrösseUpDown2";
             this.InterferenzmustergrösseUpDown2.Size = new System.Drawing.Size(124, 22);
             this.InterferenzmustergrösseUpDown2.TabIndex = 39;
-            this.toolTip1.SetToolTip(this.InterferenzmustergrösseUpDown2, "Der Durchmesser des Interferenzmusters, das auf der Bildebene entsteht.");
+            this.toolTip.SetToolTip(this.InterferenzmustergrösseUpDown2, "Der Durchmesser des Interferenzmusters, das auf der Bildebene entsteht.");
             this.InterferenzmustergrösseUpDown2.Value = new decimal(new int[] {
             80,
             0,
@@ -299,24 +299,24 @@ namespace MatrixTest
             0});
             this.InterferenzmustergrösseUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
-            // label6
+            // RLVeränderungLabel
             // 
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(0, 112);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(166, 17);
-            this.label6.TabIndex = 42;
-            this.label6.Text = "R.-L.-Veränderung [μm]";
+            this.RLVeränderungLabel.ForeColor = System.Drawing.Color.White;
+            this.RLVeränderungLabel.Location = new System.Drawing.Point(0, 112);
+            this.RLVeränderungLabel.Name = "RLVeränderungLabel";
+            this.RLVeränderungLabel.Size = new System.Drawing.Size(166, 17);
+            this.RLVeränderungLabel.TabIndex = 42;
+            this.RLVeränderungLabel.Text = "R.-L.-Veränderung [μm]";
             // 
-            // label4
+            // LaserDurchmesserLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(255, 58);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(167, 17);
-            this.label4.TabIndex = 40;
-            this.label4.Text = "Laser-Durchmesser [mm]";
+            this.LaserDurchmesserLabel.AutoSize = true;
+            this.LaserDurchmesserLabel.ForeColor = System.Drawing.Color.White;
+            this.LaserDurchmesserLabel.Location = new System.Drawing.Point(255, 58);
+            this.LaserDurchmesserLabel.Name = "LaserDurchmesserLabel";
+            this.LaserDurchmesserLabel.Size = new System.Drawing.Size(167, 17);
+            this.LaserDurchmesserLabel.TabIndex = 40;
+            this.LaserDurchmesserLabel.Text = "Laser-Durchmesser [mm]";
             // 
             // LaserDurchmesserUpDown3
             // 
@@ -337,7 +337,7 @@ namespace MatrixTest
             this.LaserDurchmesserUpDown3.Name = "LaserDurchmesserUpDown3";
             this.LaserDurchmesserUpDown3.Size = new System.Drawing.Size(123, 22);
             this.LaserDurchmesserUpDown3.TabIndex = 41;
-            this.toolTip1.SetToolTip(this.LaserDurchmesserUpDown3, "Der Durchmesser der Laserdiode. Zur Bestimmung des Interferenzmusters werden für " +
+            this.toolTip.SetToolTip(this.LaserDurchmesserUpDown3, "Der Durchmesser der Laserdiode. Zur Bestimmung des Interferenzmusters werden für " +
         "jeden Punkt auf der Bildebene\r\nLichtwellen von verschiedenen Emissionspunkten im" +
         " Laser überlagert.");
             this.LaserDurchmesserUpDown3.Value = new decimal(new int[] {
@@ -408,12 +408,12 @@ namespace MatrixTest
             this.FormCloseLabel.MouseLeave += new System.EventHandler(this.FormCloseLabel_MouseLeave);
             this.FormCloseLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.FormCloseLabel_MouseEnter);
             // 
-            // toolTip1
+            // toolTip
             // 
-            this.toolTip1.Active = false;
-            this.toolTip1.AutoPopDelay = 30000;
-            this.toolTip1.InitialDelay = 500;
-            this.toolTip1.ReshowDelay = 100;
+            this.toolTip.Active = false;
+            this.toolTip.AutoPopDelay = 30000;
+            this.toolTip.InitialDelay = 500;
+            this.toolTip.ReshowDelay = 100;
             // 
             // Interferenzmustersimulation
             // 
@@ -421,8 +421,8 @@ namespace MatrixTest
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(1039, 439);
-            this.Controls.Add(this.ControlBarPanel);
             this.Controls.Add(this.ControlPanel);
+            this.Controls.Add(this.ControlBarPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -449,25 +449,25 @@ namespace MatrixTest
         private System.Windows.Forms.Panel ControlPanel;
         private System.Windows.Forms.Button RenderButton;
         private System.Windows.Forms.Button toWavelengthButton;
-        private System.Windows.Forms.TextBox RLVeränderung;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox RLVeränderungTextBox;
+        private System.Windows.Forms.Label RLVeränderungLabel;
         private System.Windows.Forms.NumericUpDown LaserDurchmesserUpDown3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label LaserDurchmesserLabel;
         private System.Windows.Forms.NumericUpDown InterferenzmustergrösseUpDown2;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label InterferenzmustergrösseLabel;
         private System.Windows.Forms.NumericUpDown Länge2RelativUpDown;
         private System.Windows.Forms.NumericUpDown Länge1UpDown;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label Länge1Label;
+        private System.Windows.Forms.Label Länge2RelativLabel;
         private System.Windows.Forms.Panel ControlBarPanel;
         private System.Windows.Forms.Label FormMinimizeLabel;
         private System.Windows.Forms.Label FormCloseLabel;
         private System.Windows.Forms.NumericUpDown RendergenauigkeitUpDown;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label RendergenauigkeitLabel;
         private System.Windows.Forms.Button ControlPanelCollapseButton;
         private System.Windows.Forms.Panel ControlSubPanel;
         private System.Windows.Forms.Label FormHelpLabel;
-        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolTip toolTip;
     }
 }
 

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading;
 
-namespace MatrixTest
+namespace InterferenzmusterSimulation
 {
     class Model
     {
@@ -15,12 +16,12 @@ namespace MatrixTest
         /// </summary>
         private double myD2;
         /// <summary>
-        /// Relative Längenänderung auf dem "Fotowiderstand" pro Pixel in der Bitmap
+        /// Relative Längenänderung auf der Bildebene pro Pixel in der Bitmap
         /// </summary>
         private double myRelativePerPixel;
         /// <summary>
-        /// In der Mitte des Fotowiderstandes befindet sich die Funktionskoordinate O(0/0).
-        /// Die Variable bezeichnet die x-Koordinate am linken Rand des Fotowiderstandes
+        /// In der Mitte der Bildebene befindet sich die Funktionskoordinate O(0/0).
+        /// Die Variable bezeichnet die x-Koordinate am linken Rand der Bildebene
         /// </summary>
         private double myXmin;
         private double myXmax;
@@ -63,7 +64,7 @@ namespace MatrixTest
         {
             if (myView != null)
             {
-                myView.DrawInterferencePatternWithThreading();
+                new Thread(myView.DrawInterferencePatternWithThreading).Start();
             }
         }
 

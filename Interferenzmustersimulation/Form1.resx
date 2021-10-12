@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="toolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
   <data name="RendergenauigkeitUpDown.ToolTip" xml:space="preserve">
@@ -128,7 +128,7 @@ sodass es zu einer dem Quadrat des eingegebenen Wertes entsprechender Anzahl Sch
 Die Schnittpunkte innerhalb des Laserkreises dienen als die oben beschriebenen Emissionspunkte.
 </value>
   </data>
-  <data name="RLVeränderung.ToolTip" xml:space="preserve">
+  <data name="RLVeränderungTextBox.ToolTip" xml:space="preserve">
     <value>Die Änderung bei einem Klick auf das Control "Relativer L.-Unterschied [μm]"
 Dadurch lässt sich die relative Längendifferenz um ein Vielfaches der Wellenlänge λ verändern.
 Zum Ausführen einfacher Operationen (+ - * /) "Enter" drücken.</value>
