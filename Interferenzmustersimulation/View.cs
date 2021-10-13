@@ -37,13 +37,14 @@ namespace InterferenzmusterSimulation
         private Model myModel;
         private Form myForm;
         private List<Thread> myWorkerList = new List<Thread>();
-        private bool myRenderingFinished = true;
+        private Button myFormRenderButton;
 
-        public View(Model model)
+        public View(Model model, Button RenderButton)
         {
             myModel = model;
             myBild = new Bitmap(myModel.Width, myModel.Height);
             myForm = Form.ActiveForm;
+            myFormRenderButton = RenderButton;
 
             for (int i = 0; i < Environment.ProcessorCount; i++)
             {
@@ -53,27 +54,27 @@ namespace InterferenzmusterSimulation
 
         public void DrawInterferencePatternWithThreading()
         {
-            myRenderingFinished = false;
-            int i = -myModel.Width / 2;
+            myFormRenderButton.Invoke((MethodInvoker)delegate {
+                // Running on the UI thread
+                myFormRenderButton.Visible = false;
+            });
 
-            Brush[] myIntensityBrushesArray = new Brush[-i + 1];
+            int Position = -myModel.Width / 2;
+
+            Brush[] myIntensityBrushesArray = new Brush[-Position + 1];
 
             int range = myModel.Width / 2 / myWorkerList.Count;
 
-            int FinishCalls = 0;
-            int ThreadCalls = 0;
-
-            while (i <= 0)
+            while (Position <= 0)
             {
                 for (int q = 0; q < myWorkerList.Count; q++)
                 {
-                    if ((myWorkerList[q] == null || !myWorkerList[q].IsAlive) && i <= 0)
+                    if ((myWorkerList[q] == null || !myWorkerList[q].IsAlive) && Position <= 0)
                     {
                         myWorkerList[q] = new Thread(ThreadWorker);
 
-                        myWorkerList[q].Start(i);
-                        i += range;
-                        ThreadCalls++;
+                        myWorkerList[q].Start(Position);
+                        Position += range;
                     }
                 }
             }
@@ -90,42 +91,51 @@ namespace InterferenzmusterSimulation
                     Color IntensityColor = Color.FromArgb(Convert.ToInt32(255 * intensity), 0, 0);
                     myIntensityBrushesArray[-myj] = new SolidBrush(IntensityColor);
                 }
-                Finish();
+
+                CheckForFinish();
                 return;
+            }
+
+            void CheckForFinish()
+            {
+                int ActiveThreadsCount = 0;
+                for (int q = 0; q < myWorkerList.Count; q++)
+                {
+                    if (myWorkerList[q].IsAlive) { ActiveThreadsCount++; }
+                }
+
+                if(ActiveThreadsCount == 1 && Position > 0)
+                { Finish(); }
             }
 
             void Finish()
             {
-                FinishCalls++;
+                Graphics g = Graphics.FromImage(myBild);
+                g.SmoothingMode = SmoothingMode.AntiAlias;
+                g.Clear(Color.Black);
 
-                if (FinishCalls == ThreadCalls)
+
+                for (int a = myIntensityBrushesArray.Length - 1; a >= 0; a--)
                 {
-                    Graphics g = Graphics.FromImage(myBild);
-                    g.SmoothingMode = SmoothingMode.AntiAlias;
-                    g.Clear(Color.Black);
-
-
-                    for (int a = myIntensityBrushesArray.Length - 1; a >= 0; a--)
-                    {
-                        double size = 2 * -a;
-                        g.FillEllipse(myIntensityBrushesArray[a], a + myModel.Width / 2, myModel.Height / 2 + a, (float)size, (float)size);
-                    }
-
-                    g.Dispose();
-                    myRenderingFinished = true;
-                    myForm.Invalidate();
+                    double size = 2 * -a;
+                    g.FillEllipse(myIntensityBrushesArray[a], a + myModel.Width / 2, myModel.Height / 2 + a, (float)size, (float)size);
                 }
+
+                g.Dispose();
+                
+                myFormRenderButton.Invoke((MethodInvoker)delegate {
+                    // Running on the UI thread
+                    myFormRenderButton.Visible = true;
+                    (myForm as Interferenzmustersimulation).ChacheNewRendering();
+                });
+
+                myForm.Invalidate();
             }
         }
 
         public Bitmap ModelViewImage
         {
             get { return myBild; }
-        }
-
-        public bool RenderingFinished
-        {
-            get { return myRenderingFinished; }
         }
     }
 }

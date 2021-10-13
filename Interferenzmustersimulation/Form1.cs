@@ -41,30 +41,24 @@ namespace InterferenzmusterSimulation
             int BitmapHeight = ClientSize.Height;
             InterferencePatternModel = new Model((double)Länge1UpDown.Value, (double)Länge2RelativUpDown.Value,
                 length, BitmapHeight, BitmapHeight, (double)LaserDurchmesserUpDown3.Value / 2.0, (double)RendergenauigkeitUpDown.Value);
-            InterferencePatternModel.ModelView = new View(InterferencePatternModel);
+            InterferencePatternModel.ModelView = new View(InterferencePatternModel, RenderButton);
             RLVeränderungTextBox.Text = Convert.ToString(Länge2RelativUpDown.Increment) + ".0";
         }
         private void RenderButton_Click(object sender, EventArgs e)
         {
             InterferencePatternModel.notifyView();
-            ChangeRenderButtonvisibility(false);
         }
 
-        public void ChangeRenderButtonvisibility(bool visible)
+        public void ChacheNewRendering()
         {
-            RenderButton.Visible = visible;
+            CachedRendering = new Bitmap(InterferencePatternModel.ModelView.ModelViewImage);
         }
 
         Bitmap CachedRendering;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            if (InterferencePatternModel != null)
+            if (CachedRendering != null)
             {
-                if (InterferencePatternModel.ModelView.RenderingFinished)
-                { 
-                    CachedRendering = new Bitmap(InterferencePatternModel.ModelView.ModelViewImage);
-                    ChangeRenderButtonvisibility(true);
-                }
                 Graphics g = e.Graphics;
                 g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.DrawImage(CachedRendering, new Point((ClientSize.Width - CachedRendering.Width) / 2, 0));
