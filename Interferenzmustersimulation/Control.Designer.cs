@@ -44,10 +44,10 @@ namespace InterferenzmusterSimulation
             this.toWavelengthButton = new System.Windows.Forms.Button();
             this.InterferenzmustergrösseLabel = new System.Windows.Forms.Label();
             this.RLVeränderungTextBox = new System.Windows.Forms.TextBox();
-            this.InterferenzmustergrösseUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.InterferenzmustergrösseUpDown = new System.Windows.Forms.NumericUpDown();
             this.RLVeränderungLabel = new System.Windows.Forms.Label();
             this.LaserDurchmesserLabel = new System.Windows.Forms.Label();
-            this.LaserDurchmesserUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.LaserDurchmesserUpDown = new System.Windows.Forms.NumericUpDown();
             this.ControlBarPanel = new System.Windows.Forms.Panel();
             this.FormHelpLabel = new System.Windows.Forms.Label();
             this.FormMinimizeLabel = new System.Windows.Forms.Label();
@@ -58,8 +58,8 @@ namespace InterferenzmusterSimulation
             ((System.ComponentModel.ISupportInitialize)(this.RendergenauigkeitUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Länge1UpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Länge2RelativUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.InterferenzmustergrösseUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LaserDurchmesserUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.InterferenzmustergrösseUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LaserDurchmesserUpDown)).BeginInit();
             this.ControlBarPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,10 +116,10 @@ namespace InterferenzmusterSimulation
             this.ControlSubPanel.Controls.Add(this.toWavelengthButton);
             this.ControlSubPanel.Controls.Add(this.InterferenzmustergrösseLabel);
             this.ControlSubPanel.Controls.Add(this.RLVeränderungTextBox);
-            this.ControlSubPanel.Controls.Add(this.InterferenzmustergrösseUpDown2);
+            this.ControlSubPanel.Controls.Add(this.InterferenzmustergrösseUpDown);
             this.ControlSubPanel.Controls.Add(this.RLVeränderungLabel);
             this.ControlSubPanel.Controls.Add(this.LaserDurchmesserLabel);
-            this.ControlSubPanel.Controls.Add(this.LaserDurchmesserUpDown3);
+            this.ControlSubPanel.Controls.Add(this.LaserDurchmesserUpDown);
             this.ControlSubPanel.Location = new System.Drawing.Point(3, 3);
             this.ControlSubPanel.MaximumSize = new System.Drawing.Size(457, 160);
             this.ControlSubPanel.Name = "ControlSubPanel";
@@ -270,34 +270,34 @@ namespace InterferenzmusterSimulation
             this.RLVeränderungTextBox.WordWrap = false;
             this.RLVeränderungTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RLVeränderung_KeyDown);
             // 
-            // InterferenzmustergrösseUpDown2
+            // InterferenzmustergrösseUpDown
             // 
-            this.InterferenzmustergrösseUpDown2.AccessibleDescription = "";
-            this.InterferenzmustergrösseUpDown2.AccessibleName = "";
-            this.InterferenzmustergrösseUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.InterferenzmustergrösseUpDown2.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.InterferenzmustergrösseUpDown2.DecimalPlaces = 1;
-            this.InterferenzmustergrösseUpDown2.Location = new System.Drawing.Point(258, 20);
-            this.InterferenzmustergrösseUpDown2.Maximum = new decimal(new int[] {
+            this.InterferenzmustergrösseUpDown.AccessibleDescription = "";
+            this.InterferenzmustergrösseUpDown.AccessibleName = "";
+            this.InterferenzmustergrösseUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.InterferenzmustergrösseUpDown.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.InterferenzmustergrösseUpDown.DecimalPlaces = 1;
+            this.InterferenzmustergrösseUpDown.Location = new System.Drawing.Point(258, 20);
+            this.InterferenzmustergrösseUpDown.Maximum = new decimal(new int[] {
             268435456,
             1042612833,
             542101086,
             0});
-            this.InterferenzmustergrösseUpDown2.Minimum = new decimal(new int[] {
+            this.InterferenzmustergrösseUpDown.Minimum = new decimal(new int[] {
             4,
             0,
             0,
             65536});
-            this.InterferenzmustergrösseUpDown2.Name = "InterferenzmustergrösseUpDown2";
-            this.InterferenzmustergrösseUpDown2.Size = new System.Drawing.Size(124, 22);
-            this.InterferenzmustergrösseUpDown2.TabIndex = 39;
-            this.toolTip.SetToolTip(this.InterferenzmustergrösseUpDown2, "Der Durchmesser des Interferenzmusters, das auf der Bildebene entsteht.");
-            this.InterferenzmustergrösseUpDown2.Value = new decimal(new int[] {
-            80,
+            this.InterferenzmustergrösseUpDown.Name = "InterferenzmustergrösseUpDown";
+            this.InterferenzmustergrösseUpDown.Size = new System.Drawing.Size(124, 22);
+            this.InterferenzmustergrösseUpDown.TabIndex = 39;
+            this.toolTip.SetToolTip(this.InterferenzmustergrösseUpDown, "Der Durchmesser des Interferenzmusters, das auf der Bildebene entsteht.");
+            this.InterferenzmustergrösseUpDown.Value = new decimal(new int[] {
+            70,
             0,
             0,
             0});
-            this.InterferenzmustergrösseUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
+            this.InterferenzmustergrösseUpDown.ValueChanged += new System.EventHandler(this.InterferenzmusterGrösseUpDown_ValueChanged);
             // 
             // RLVeränderungLabel
             // 
@@ -318,34 +318,34 @@ namespace InterferenzmusterSimulation
             this.LaserDurchmesserLabel.TabIndex = 40;
             this.LaserDurchmesserLabel.Text = "Laser-Durchmesser [mm]";
             // 
-            // LaserDurchmesserUpDown3
+            // LaserDurchmesserUpDown
             // 
-            this.LaserDurchmesserUpDown3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.LaserDurchmesserUpDown3.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.LaserDurchmesserUpDown3.DecimalPlaces = 9;
-            this.LaserDurchmesserUpDown3.Location = new System.Drawing.Point(258, 78);
-            this.LaserDurchmesserUpDown3.Maximum = new decimal(new int[] {
+            this.LaserDurchmesserUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.LaserDurchmesserUpDown.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.LaserDurchmesserUpDown.DecimalPlaces = 9;
+            this.LaserDurchmesserUpDown.Location = new System.Drawing.Point(258, 78);
+            this.LaserDurchmesserUpDown.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.LaserDurchmesserUpDown3.Minimum = new decimal(new int[] {
+            this.LaserDurchmesserUpDown.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             1048576});
-            this.LaserDurchmesserUpDown3.Name = "LaserDurchmesserUpDown3";
-            this.LaserDurchmesserUpDown3.Size = new System.Drawing.Size(123, 22);
-            this.LaserDurchmesserUpDown3.TabIndex = 41;
-            this.toolTip.SetToolTip(this.LaserDurchmesserUpDown3, "Der Durchmesser der Laserdiode. Zur Bestimmung des Interferenzmusters werden für " +
+            this.LaserDurchmesserUpDown.Name = "LaserDurchmesserUpDown";
+            this.LaserDurchmesserUpDown.Size = new System.Drawing.Size(123, 22);
+            this.LaserDurchmesserUpDown.TabIndex = 41;
+            this.toolTip.SetToolTip(this.LaserDurchmesserUpDown, "Der Durchmesser der Laserdiode. Zur Bestimmung des Interferenzmusters werden für " +
         "jeden Punkt auf der Bildebene\r\nLichtwellen von verschiedenen Emissionspunkten im" +
         " Laser überlagert.");
-            this.LaserDurchmesserUpDown3.Value = new decimal(new int[] {
-            15,
+            this.LaserDurchmesserUpDown.Value = new decimal(new int[] {
+            750000,
             0,
             0,
-            262144});
-            this.LaserDurchmesserUpDown3.ValueChanged += new System.EventHandler(this.numericUpDown3_ValueChanged);
+            589824});
+            this.LaserDurchmesserUpDown.ValueChanged += new System.EventHandler(this.LaserDurchmesserUpDown_ValueChanged);
             // 
             // ControlBarPanel
             // 
@@ -437,8 +437,8 @@ namespace InterferenzmusterSimulation
             ((System.ComponentModel.ISupportInitialize)(this.RendergenauigkeitUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Länge1UpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Länge2RelativUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.InterferenzmustergrösseUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.LaserDurchmesserUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.InterferenzmustergrösseUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LaserDurchmesserUpDown)).EndInit();
             this.ControlBarPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -451,9 +451,9 @@ namespace InterferenzmusterSimulation
         private System.Windows.Forms.Button toWavelengthButton;
         private System.Windows.Forms.TextBox RLVeränderungTextBox;
         private System.Windows.Forms.Label RLVeränderungLabel;
-        private System.Windows.Forms.NumericUpDown LaserDurchmesserUpDown3;
+        private System.Windows.Forms.NumericUpDown LaserDurchmesserUpDown;
         private System.Windows.Forms.Label LaserDurchmesserLabel;
-        private System.Windows.Forms.NumericUpDown InterferenzmustergrösseUpDown2;
+        private System.Windows.Forms.NumericUpDown InterferenzmustergrösseUpDown;
         private System.Windows.Forms.Label InterferenzmustergrösseLabel;
         private System.Windows.Forms.NumericUpDown Länge2RelativUpDown;
         private System.Windows.Forms.NumericUpDown Länge1UpDown;

@@ -23,6 +23,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace InterferenzmusterSimulation
 {
@@ -61,11 +62,11 @@ namespace InterferenzmusterSimulation
         /// </summary>
         private double myLaserDurchmesser;
         private View myView;
-        private double myRenderGenauigkeit; //Genauigkeit
+        private double myRenderGenauigkeit; // Genauigkeit
 
         const decimal myWellenlänge = 632.8E-9m;
-        const double k = 2 * Math.PI / (double)myWellenlänge; //Wellenvektor
-        public Model(double d1, double d2, double xmax, int width, int height, double LaserDurchmesser, double RenderGenauigkeit)
+        const double k = 2 * Math.PI / (double)myWellenlänge; // Wellenvektor
+        public Model(double d1, double d2, double xmax, int width, int height, double LaserDurchmesser, double RenderGenauigkeit, Button RenderButton)
         {
             myD1 = d1 * 1E-3;
             myD2 = d2 * 1E-6;
@@ -77,6 +78,8 @@ namespace InterferenzmusterSimulation
             myBitmapHeight = height;
             myLaserDurchmesser = LaserDurchmesser;
             myRenderGenauigkeit = RenderGenauigkeit;
+
+            myView = new View(this, RenderButton);
 
             newRelativePerPixel();
         }
@@ -93,14 +96,14 @@ namespace InterferenzmusterSimulation
         {
             //Transform to map the graph bounds to the Bitmap.
             RectangleF rect = new RectangleF(
-                (float)myXmin, (float)myXmax, (float)(myXmax - myXmin), (float)(myYmax - myYmin));
+                (float)myXmin, (float)myYmin, (float)(myXmax - myXmin), (float)(myYmax - myYmin));
 
             //upper-left, upper-right, and lower-left corners
             PointF[] pts =
             {
-                new PointF(0, myBitmapHeight),
-                new PointF(myBitmapWidth, myBitmapHeight),
                 new PointF(0, 0),
+                new PointF(myBitmapWidth, 0),
+                new PointF(0, myBitmapHeight),
             };
 
             Matrix inverse = new Matrix(rect, pts);
@@ -112,7 +115,7 @@ namespace InterferenzmusterSimulation
             };
             inverse.TransformPoints(pixel_pts);
             myRelativePerPixel = pixel_pts[1].X - pixel_pts[0].X;
-            myRelativePerPixel /= 2;
+            //myRelativePerPixel /= 2;
 
             inverse.Dispose();
         }
@@ -120,24 +123,24 @@ namespace InterferenzmusterSimulation
         /// <summary>
         /// Funktion, die Zeit wird als globale Variable verwendet
         /// </summary>
-        /// <param name="r">Die Variable bezeichnet den Abstand zum Mittelpunkt des Interferenzmusters auf der Bildebene in Z-Richtung</param>
-        /// <param name="hz">Die Variable bezeichnet den Abstand zum Mittelpunkt des Lasers in Z-Richtung</param>
-        /// <param name="hx">Die Variable bezeichnet den Abstand zum Mittelpunkt des Lasers in X-Richtung</param>
+        /// <param name="Rx">Abstand zum Mittelpunkt des Interferenzmusters auf der Bildebene in X-Richtung</param>
+        /// <param name="Hx">Abstand zum Laser-Mittelpunktin X-Richtung</param>
+        /// <param name="Hz">Abstand zum Laser-Mittelpunktin in Z-Richtung</param>
         /// <returns>Normierte Superposition zwischen 0 und 1</returns>
-        public double InterferenzFunktion(double r, double hz = 0, double hx = 0)
+        public double InterferenzFunktion(double Rx, double Hx = 0, double Hz = 0)
         {
-            double l1 = Math.Sqrt(Math.Pow(myD1, 2) + Math.Pow(r - hz, 2) + Math.Pow(hx, 2)); //Distanz, welche die erste Welle zurücklegt
-            double l2 = Math.Sqrt(Math.Pow(myD1 + myD2, 2) + Math.Pow(r - hz, 2) + Math.Pow(hx, 2)); //Distanz, welche die zweite Welle zurücklegt
+            double l1 = Math.Sqrt(Math.Pow(myD1, 2) + Math.Pow(Rx - Hx, 2) + Math.Pow(Hz, 2)); // Distanz, welche die erste Welle zurücklegt
+            double l2 = Math.Sqrt(Math.Pow(myD1 + myD2, 2) + Math.Pow(Rx - Hx, 2) + Math.Pow(Hz, 2)); // Distanz, welche die zweite Welle zurücklegt
 
             double Intensität = Math.Cos((l1 - l2) * k) + 1;
 
-            return Intensität / 2; //Teilen durch Maximalwert, um Gradient zwischen 0 und 1 zu erhalten
+            return Intensität / 2; // Teilen durch Maximalwert, um Gradient zwischen 0 und 1 zu erhalten
         }
 
         /// <summary>
         /// Durchschnittsberechnung unter Berücksichtigung der Lasergrösse
         /// </summary>
-        /// <param name="x"></param>
+        /// <param name="x">Position auf der Bildeben in X-Richtung</param>
         /// <returns></returns>
         public double InterferenzFunktionLaserGrösse(double x)
         {
@@ -165,7 +168,6 @@ namespace InterferenzmusterSimulation
         public View ModelView
         {
             get { return myView; }
-            set { myView = value; }
         }
         public int Height
         {
@@ -194,7 +196,7 @@ namespace InterferenzmusterSimulation
             set { myD2 = value * 1E-6; } // Mikrometer zu Meter
         }
 
-        public double LaserRadius
+        public double LaserDurchmesser
         {
             set { myLaserDurchmesser = value; }
         }
@@ -203,7 +205,7 @@ namespace InterferenzmusterSimulation
         {
             set
             {
-                myXmax = value * 1E-3; //Millimeter zu Meter
+                myXmax = value * 1E-3; // Millimeter zu Meter
                 myXmin = -myXmax;
                 myYmax = myXmax;
                 myYmin = -myXmax;

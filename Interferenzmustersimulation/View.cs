@@ -54,7 +54,8 @@ namespace InterferenzmusterSimulation
 
         public void DrawInterferencePatternWithThreading()
         {
-            myFormRenderButton.Invoke((MethodInvoker)delegate {
+            myFormRenderButton.Invoke((MethodInvoker)delegate
+            {
                 // Running on the UI thread
                 myFormRenderButton.Visible = false;
             });
@@ -63,13 +64,13 @@ namespace InterferenzmusterSimulation
 
             Brush[] myIntensityBrushesArray = new Brush[-Position + 1];
 
-            int range = myModel.Width / 2 / myWorkerList.Count;
+            int range = (myModel.Width / 2 + 1) / myWorkerList.Count;
 
             while (Position <= 0)
             {
-                for (int q = 0; q < myWorkerList.Count; q++)
+                for (int q = 0; q < myWorkerList.Count && Position <= 0; q++)
                 {
-                    if ((myWorkerList[q] == null || !myWorkerList[q].IsAlive) && Position <= 0)
+                    if (myWorkerList[q] == null || !myWorkerList[q].IsAlive)
                     {
                         myWorkerList[q] = new Thread(ThreadWorker);
 
@@ -104,7 +105,7 @@ namespace InterferenzmusterSimulation
                     if (myWorkerList[q].IsAlive) { ActiveThreadsCount++; }
                 }
 
-                if(ActiveThreadsCount == 1 && Position > 0)
+                if (ActiveThreadsCount == 1 && Position > 0)
                 { Finish(); }
             }
 
@@ -122,11 +123,12 @@ namespace InterferenzmusterSimulation
                 }
 
                 g.Dispose();
-                
-                myFormRenderButton.Invoke((MethodInvoker)delegate {
+
+                myFormRenderButton.Invoke((MethodInvoker)delegate
+                {
                     // Running on the UI thread
                     myFormRenderButton.Visible = true;
-                    (myForm as Interferenzmustersimulation).ChacheNewRendering();
+                    (myForm as Interferenzmustersimulation).CacheNewRendering();
                 });
 
                 myForm.Invalidate();

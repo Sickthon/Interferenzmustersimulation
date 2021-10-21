@@ -29,6 +29,7 @@ namespace InterferenzmusterSimulation
     public partial class Interferenzmustersimulation : Form
     {
         Model InterferencePatternModel;
+        Bitmap CachedRendering;
         public Interferenzmustersimulation()
         {
             InitializeComponent();
@@ -37,11 +38,11 @@ namespace InterferenzmusterSimulation
         private void Form1_Load(object sender, EventArgs e)
         {
             ControlBarPanel.Left = ClientSize.Width - ControlBarPanel.Width;
-            double length = (double)InterferenzmustergrösseUpDown2.Value / 2.0;
+            double length = (double)InterferenzmustergrösseUpDown.Value / 2.0;
             int BitmapHeight = ClientSize.Height;
             InterferencePatternModel = new Model((double)Länge1UpDown.Value, (double)Länge2RelativUpDown.Value,
-                length, BitmapHeight, BitmapHeight, (double)LaserDurchmesserUpDown3.Value / 2.0, (double)RendergenauigkeitUpDown.Value);
-            InterferencePatternModel.ModelView = new View(InterferencePatternModel, RenderButton);
+                length, BitmapHeight, BitmapHeight, (double)LaserDurchmesserUpDown.Value,
+                (double)RendergenauigkeitUpDown.Value, RenderButton);
             RLVeränderungTextBox.Text = Convert.ToString(Länge2RelativUpDown.Increment) + ".0";
         }
         private void RenderButton_Click(object sender, EventArgs e)
@@ -49,12 +50,11 @@ namespace InterferenzmusterSimulation
             InterferencePatternModel.notifyView();
         }
 
-        public void ChacheNewRendering()
+        public void CacheNewRendering()
         {
             CachedRendering = new Bitmap(InterferencePatternModel.ModelView.ModelViewImage);
         }
 
-        Bitmap CachedRendering;
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
             if (CachedRendering != null)
@@ -81,19 +81,18 @@ namespace InterferenzmusterSimulation
             {
                 Länge2RelativUpDown.Value = (decimal)(InterferencePatternModel.d2 * 1E6);
                 MessageBox.Show("Der zweite Arm kann keine negative Länge besitzen, da dies einerseits keinen Sinn ergibt " +
-                    "und andererseits erhielte man ein falsches Interferenzmuster, schliesslich werden die Zahlen für die Berechnung quadriert. " +
-                    "Diese Erkenntnis kostete mich übrigens den letzten Nachmittag meiner Sommerferien.");
+                    "und andererseits erhielte man ein falsches Interferenzmuster, schliesslich werden die Zahlen für die Berechnung quadriert.");
             }
         }
 
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        private void InterferenzmusterGrösseUpDown_ValueChanged(object sender, EventArgs e)
         {
-            InterferencePatternModel.xmax = (double)InterferenzmustergrösseUpDown2.Value / 2.0;
+            InterferencePatternModel.xmax = (double)InterferenzmustergrösseUpDown.Value / 2.0;
         }
 
-        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        private void LaserDurchmesserUpDown_ValueChanged(object sender, EventArgs e)
         {
-            InterferencePatternModel.LaserRadius = (double)LaserDurchmesserUpDown3.Value / 2.0;
+            InterferencePatternModel.LaserDurchmesser = (double)LaserDurchmesserUpDown.Value;
         }
 
         private void toWavelengthButton_Click(object sender, EventArgs e)
