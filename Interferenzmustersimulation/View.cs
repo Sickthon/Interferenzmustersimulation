@@ -128,7 +128,7 @@ namespace InterferenzmusterSimulation
                 {
                     // Running on the UI thread
                     myFormRenderButton.Visible = true;
-                    (myForm as Interferenzmustersimulation).CacheNewRendering();
+                    (myForm as Control).CacheNewRendering();
                 });
 
                 myForm.Invalidate();

@@ -26,11 +26,11 @@ using System.Windows.Forms;
 
 namespace InterferenzmusterSimulation
 {
-    public partial class Interferenzmustersimulation : Form
+    public partial class Control : Form
     {
         Model InterferencePatternModel;
         Bitmap CachedRendering;
-        public Interferenzmustersimulation()
+        public Control()
         {
             InitializeComponent();
         }

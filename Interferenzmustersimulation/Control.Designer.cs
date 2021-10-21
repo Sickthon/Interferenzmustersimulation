@@ -1,7 +1,7 @@
 ﻿
 namespace InterferenzmusterSimulation
 {
-    partial class Interferenzmustersimulation
+    partial class Control
     {
         /// <summary>
         /// Erforderliche Designervariable.
@@ -30,7 +30,7 @@ namespace InterferenzmusterSimulation
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Interferenzmustersimulation));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Control));
             this.ControlPanel = new System.Windows.Forms.Panel();
             this.ControlPanelCollapseButton = new System.Windows.Forms.Button();
             this.RenderButton = new System.Windows.Forms.Button();

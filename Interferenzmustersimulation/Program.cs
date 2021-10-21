@@ -34,7 +34,7 @@ namespace InterferenzmusterSimulation
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Interferenzmustersimulation());
+            Application.Run(new Control());
         }
     }
 }
