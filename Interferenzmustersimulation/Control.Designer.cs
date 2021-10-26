@@ -83,25 +83,29 @@ namespace InterferenzmusterSimulation
             // 
             // ControlPanelCollapseButton
             // 
+            this.ControlPanelCollapseButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ControlPanelCollapseButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.ControlPanelCollapseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ControlPanelCollapseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.ControlPanelCollapseButton.Location = new System.Drawing.Point(438, 186);
+            this.ControlPanelCollapseButton.Location = new System.Drawing.Point(437, 185);
             this.ControlPanelCollapseButton.Name = "ControlPanelCollapseButton";
             this.ControlPanelCollapseButton.Size = new System.Drawing.Size(25, 25);
             this.ControlPanelCollapseButton.TabIndex = 48;
             this.ControlPanelCollapseButton.Text = "^";
-            this.ControlPanelCollapseButton.UseVisualStyleBackColor = true;
+            this.ControlPanelCollapseButton.UseVisualStyleBackColor = false;
             this.ControlPanelCollapseButton.Click += new System.EventHandler(this.ControlPanelCollapseButton_Click);
             // 
             // RenderButton
             // 
+            this.RenderButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.RenderButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.RenderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RenderButton.Location = new System.Drawing.Point(6, 173);
             this.RenderButton.Name = "RenderButton";
-            this.RenderButton.Size = new System.Drawing.Size(124, 23);
+            this.RenderButton.Size = new System.Drawing.Size(124, 24);
             this.RenderButton.TabIndex = 45;
             this.RenderButton.Text = "Berechnen";
-            this.RenderButton.UseVisualStyleBackColor = true;
+            this.RenderButton.UseVisualStyleBackColor = false;
             this.RenderButton.Click += new System.EventHandler(this.RenderButton_Click);
             // 
             // ControlSubPanel
@@ -236,14 +240,16 @@ namespace InterferenzmusterSimulation
             // 
             // toWavelengthButton
             // 
+            this.toWavelengthButton.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toWavelengthButton.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.toWavelengthButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.toWavelengthButton.Location = new System.Drawing.Point(133, 131);
             this.toWavelengthButton.Name = "toWavelengthButton";
             this.toWavelengthButton.Size = new System.Drawing.Size(22, 24);
             this.toWavelengthButton.TabIndex = 44;
             this.toWavelengthButton.Text = "λ";
             this.toWavelengthButton.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.toWavelengthButton.UseVisualStyleBackColor = true;
+            this.toWavelengthButton.UseVisualStyleBackColor = false;
             this.toWavelengthButton.Click += new System.EventHandler(this.toWavelengthButton_Click);
             // 
             // InterferenzmustergrösseLabel
@@ -415,7 +421,7 @@ namespace InterferenzmusterSimulation
             this.toolTip.InitialDelay = 500;
             this.toolTip.ReshowDelay = 100;
             // 
-            // Interferenzmustersimulation
+            // Control
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -426,7 +432,7 @@ namespace InterferenzmusterSimulation
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Interferenzmustersimulation";
+            this.Name = "Control";
             this.Text = "Interferenzmustersimulation";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
