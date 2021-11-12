@@ -328,7 +328,7 @@ namespace InterferenzmusterSimulation
             // 
             this.LaserDurchmesserUpDown.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LaserDurchmesserUpDown.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.LaserDurchmesserUpDown.DecimalPlaces = 9;
+            this.LaserDurchmesserUpDown.DecimalPlaces = 5;
             this.LaserDurchmesserUpDown.Location = new System.Drawing.Point(258, 78);
             this.LaserDurchmesserUpDown.Maximum = new decimal(new int[] {
             100000,
@@ -350,7 +350,7 @@ namespace InterferenzmusterSimulation
             750000,
             0,
             0,
-            589824});
+            393216});
             this.LaserDurchmesserUpDown.ValueChanged += new System.EventHandler(this.LaserDurchmesserUpDown_ValueChanged);
             // 
             // ControlBarPanel

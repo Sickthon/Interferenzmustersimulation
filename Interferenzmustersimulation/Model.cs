@@ -76,7 +76,7 @@ namespace InterferenzmusterSimulation
             myYmin = -myXmax;
             myBitmapWidth = width;
             myBitmapHeight = height;
-            myLaserDurchmesser = LaserDurchmesser;
+            myLaserDurchmesser = LaserDurchmesser * 1E-3;
             myRenderGenauigkeit = RenderGenauigkeit;
 
             myView = new View(this, RenderButton);
@@ -115,13 +115,12 @@ namespace InterferenzmusterSimulation
             };
             inverse.TransformPoints(pixel_pts);
             myRelativePerPixel = pixel_pts[1].X - pixel_pts[0].X;
-            //myRelativePerPixel /= 2;
 
             inverse.Dispose();
         }
 
         /// <summary>
-        /// Funktion, die Zeit wird als globale Variable verwendet
+        /// Berechnung des Interferenzmusters an einem Punkt
         /// </summary>
         /// <param name="Rx">Abstand zum Mittelpunkt des Interferenzmusters auf der Bildebene in X-Richtung</param>
         /// <param name="Hx">Abstand zum Laser-Mittelpunktin X-Richtung</param>
@@ -134,7 +133,7 @@ namespace InterferenzmusterSimulation
 
             double Intensität = Math.Cos((l1 - l2) * k) + 1;
 
-            return Intensität / 2; // Teilen durch Maximalwert, um Gradient zwischen 0 und 1 zu erhalten
+            return Intensität / 2; // Teilen durch Maximalwert, um Gradienten zwischen 0 und 1 zu erhalten
         }
 
         /// <summary>
@@ -198,7 +197,7 @@ namespace InterferenzmusterSimulation
 
         public double LaserDurchmesser
         {
-            set { myLaserDurchmesser = value; }
+            set { myLaserDurchmesser = value * 1E-3; } // Millimeter zu Meter
         }
 
         public double xmax

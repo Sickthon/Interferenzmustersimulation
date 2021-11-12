@@ -88,6 +88,7 @@ namespace InterferenzmusterSimulation
                 for (int myj = myi; myj < limit && myj <= 0; myj++)
                 {
                     double x = myj * myModel.relativePerPixel;
+                    Console.WriteLine(x);
                     double intensity = myModel.InterferenzFunktionLaserGrösse(x);
                     Color IntensityColor = Color.FromArgb(Convert.ToInt32(255 * intensity), 0, 0);
                     myIntensityBrushesArray[-myj] = new SolidBrush(IntensityColor);
